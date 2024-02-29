@@ -4,7 +4,6 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 from sklearn.cluster import KMeans
 from sklearn.metrics import silhouette_score
-from streamlit_extras.metric_cards import style_metric_cards
 import plotly_express as px
 
 
