@@ -31,8 +31,8 @@ def ahc_clustering(data, n_clusters, linkage):
     centroids = data.groupby('cluster')[['2011', '2012', '2013', '2014', '2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023']].mean()
 
     # Define threshold values (adjust these based on your analysis)
-    threshold_low = 100000  # Example threshold for "not dense"
-    threshold_high = 500000  # Example threshold for "dense"
+    threshold_low = 5000  # Example threshold for "not dense"
+    threshold_high = 10000  # Example threshold for "dense"
 
     # Add Density Category column based on centroid values
     data['Density Category'] = data['cluster'].map(lambda cluster: 'Tidak Padat' if centroids.loc[cluster].mean() < threshold_low else ('Padat' if centroids.loc[cluster].mean() < threshold_high else 'Sangat Padat'))
