@@ -30,8 +30,8 @@ def kmeans_clustering(data, num_clusters, selected_year):
     centroids = data.groupby('cluster')[['2011', '2012', '2013', '2014', '2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023']].mean()
 
     # Define threshold values for density categories (adjust these based on your analysis)
-    threshold_low = 5000  # Example threshold for "not dense"
-    threshold_high = 10000  # Example threshold for "dense"
+    threshold_low = 10000  # Example threshold for "not dense"
+    threshold_high = 50000  # Example threshold for "dense"
 
     # Add Density Category column based on centroid values
     data['Density Category'] = data['cluster'].map(lambda cluster: 'Tidak Padat' if centroids.loc[cluster].mean() < threshold_low else ('Padat' if centroids.loc[cluster].mean() < threshold_high else 'Sangat Padat'))
@@ -131,16 +131,17 @@ def kmeans_page():
 
             # Show table data when hovering over a marker
         with st.expander("SELECT DATA"):
-            selected_city = st.selectbox("Select a city", df_clustered['DESA_1'])
+            selected_city = st.selectbox("Select DESA", df_clustered['DESA_1'])
             selected_row = df_clustered[df_clustered['DESA_1'] == selected_city].squeeze()
             # Display additional information in a table
             st.table(selected_row)
 
                 # Graphs
-        col1, col2, col3 = st.columns(3)
+    col1, col2, col3 = st.columns(3)
 
-        with col1:
-             # Simple line chart showing the count of data points in each cluster
+    with col1:
+        with st.container(border=True):
+            # Simple line chart showing the count of data points in each cluster
             cluster_counts = df_clustered['cluster'].value_counts().sort_index()
             fig_cluster_counts = px.line(
                 x=cluster_counts.index,
@@ -159,15 +160,17 @@ def kmeans_page():
                 font=dict(color='#cecdcd'),  # Set text color to black
             )
             st.plotly_chart(fig_cluster_counts, use_container_width=True)
-            
-        with col2:
+
+    with col2:
+        with st.container(border=True):
             # Create a donut chart
             fig = px.pie(df_clustered, names='cluster', title='Cluster Distribution')
             fig.update_traces(hole=0.4)  # Set the size of the hole in the middle for a donut chart
             fig.update_layout(width=800)
             st.plotly_chart(fig, use_container_width=True)
 
-        with col3:
+    with col3:
+        with st.container(border=True):
             fig2 = go.Figure(
                 data=[go.Bar(x=df_clustered['cluster'], y=df_clustered[selected_year])],
                 layout=go.Layout(
@@ -181,9 +184,7 @@ def kmeans_page():
             )
             st.plotly_chart(fig2, use_container_width=True)
 
-
-
-        with st.expander('kesimpulan', expanded=True):
+    with st.expander('kesimpulan', expanded=True):
             st.write('''
             1. **Pembagian Wilayah Berdasarkan KMeans:**
                 - Berdasarkan analisis KMeans dengan {} klaster, wilayah telah terbagi ke dalam kelompok-kelompok dengan pola-pola tertentu.
