@@ -31,8 +31,8 @@ def ahc_clustering(data, n_clusters, linkage):
     centroids = data.groupby('cluster')[['2011', '2012', '2013', '2014', '2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023']].mean()
 
     # Define threshold values (adjust these based on your analysis)
-    threshold_low = 5000  # Example threshold for "not dense"
-    threshold_high = 10000  # Example threshold for "dense"
+    threshold_low = 100000  # Example threshold for "not dense"
+    threshold_high = 500000  # Example threshold for "dense"
 
     # Add Density Category column based on centroid values
     data['Density Category'] = data['cluster'].map(lambda cluster: 'Tidak Padat' if centroids.loc[cluster].mean() < threshold_low else ('Padat' if centroids.loc[cluster].mean() < threshold_high else 'Sangat Padat'))
@@ -142,47 +142,50 @@ def ahc_page():
         col1, col2, col3 = st.columns(3)
 
         with col1:
-             # Simple line chart showing the count of data points in each cluster
-            cluster_counts = df_clustered['cluster'].value_counts().sort_index()
-            fig_cluster_counts = px.line(
-                x=cluster_counts.index,
-                y=cluster_counts.values,
-                labels={'x': 'Cluster', 'y': 'Data Point Count'},
-                title='<b>Data Point Count by Cluster</b>',
-                line_shape="linear",
-                render_mode="svg",
-                markers=True
-            )
-            fig_cluster_counts.update_layout(
-                plot_bgcolor='rgba(0, 0, 0, 0)',  # Set plot background color to transparent
-                paper_bgcolor='rgba(0, 0, 0, 0)',  # Set paper background color to transparent
-                xaxis=dict(showgrid=True, gridcolor='#cecdcd'),  # Show x-axis grid and set its color
-                yaxis=dict(showgrid=True, gridcolor='#cecdcd'),  # Show y-axis grid and set its color
-                font=dict(color='#cecdcd'),  # Set text color to black
-            )
-            st.plotly_chart(fig_cluster_counts, use_container_width=True)
-            
-        with col2:
-            # Create a donut chart
-            fig = px.pie(df_clustered, names='cluster', title='Cluster Distribution')
-            fig.update_traces(hole=0.4)  # Set the size of the hole in the middle for a donut chart
-            fig.update_layout(width=800)
-            st.plotly_chart(fig, use_container_width=True)
-
-        with col3:
-            fig2 = go.Figure(
-                data=[go.Bar(x=df_clustered['cluster'], y=df_clustered[st.session_state.selected_year])],
-                layout=go.Layout(
-                    title=go.layout.Title(text=f"Population Distribution by Cluster for {st.session_state.selected_year}"),
+            with st.container(border=True):
+                # Simple line chart showing the count of data points in each cluster
+                cluster_counts = df_clustered['cluster'].value_counts().sort_index()
+                fig_cluster_counts = px.line(
+                    x=cluster_counts.index,
+                    y=cluster_counts.values,
+                    labels={'x': 'Cluster', 'y': 'Data Point Count'},
+                    title='<b>Data Point Count by Cluster</b>',
+                    line_shape="linear",
+                    render_mode="svg",
+                    markers=True
+                )
+                fig_cluster_counts.update_layout(
                     plot_bgcolor='rgba(0, 0, 0, 0)',  # Set plot background color to transparent
                     paper_bgcolor='rgba(0, 0, 0, 0)',  # Set paper background color to transparent
                     xaxis=dict(showgrid=True, gridcolor='#cecdcd'),  # Show x-axis grid and set its color
                     yaxis=dict(showgrid=True, gridcolor='#cecdcd'),  # Show y-axis grid and set its color
                     font=dict(color='#cecdcd'),  # Set text color to black
                 )
-            )
+                st.plotly_chart(fig_cluster_counts, use_container_width=True)
+                
+        with col2:
+            with st.container(border=True):
+                # Create a donut chart
+                fig = px.pie(df_clustered, names='cluster', title='Cluster Distribution')
+                fig.update_traces(hole=0.4)  # Set the size of the hole in the middle for a donut chart
+                fig.update_layout(width=800)
+                st.plotly_chart(fig, use_container_width=True)
 
-            st.plotly_chart(fig2, use_container_width=True)
+        with col3:
+            with st.container(border=True):
+                fig2 = go.Figure(
+                    data=[go.Bar(x=df_clustered['cluster'], y=df_clustered[st.session_state.selected_year])],
+                    layout=go.Layout(
+                        title=go.layout.Title(text=f"Population Distribution by Cluster for {st.session_state.selected_year}"),
+                        plot_bgcolor='rgba(0, 0, 0, 0)',  # Set plot background color to transparent
+                        paper_bgcolor='rgba(0, 0, 0, 0)',  # Set paper background color to transparent
+                        xaxis=dict(showgrid=True, gridcolor='#cecdcd'),  # Show x-axis grid and set its color
+                        yaxis=dict(showgrid=True, gridcolor='#cecdcd'),  # Show y-axis grid and set its color
+                        font=dict(color='#cecdcd'),  # Set text color to black
+                    )
+                )
+
+                st.plotly_chart(fig2, use_container_width=True)
 
         with st.expander('KESIMPULAN', expanded=True):
             st.write('''
