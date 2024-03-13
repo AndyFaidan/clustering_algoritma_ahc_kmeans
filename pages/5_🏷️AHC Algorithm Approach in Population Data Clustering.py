@@ -55,7 +55,7 @@ def SilhouetteProgressBar(silhouette_avg, target):
         st.write("You have {:.2f}% of the target silhouette score".format(percent))
 
         for percent_complete in range(percent):
-            time.sleep(0.1)
+            time.sleep(1)
             mybar.progress(percent_complete + 1, text="Silhouette Score Percentage")
     
 
