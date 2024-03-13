@@ -24,9 +24,6 @@ def ahc_clustering(data, n_clusters, linkage):
     clusterer = AgglomerativeClustering(n_clusters=n_clusters, linkage=linkage)
     data['cluster'] = clusterer.fit_predict(features)
     
-    # After clustering, calculate silhouette score
-    silhouette_avg = silhouette_score(features, data['cluster'])
-
     # Calculate centroid for each cluster
     centroids = data.groupby('cluster')[['2011', '2012', '2013', '2014', '2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023']].mean()
 
@@ -37,7 +34,30 @@ def ahc_clustering(data, n_clusters, linkage):
     # Add Density Category column based on centroid values
     data['Density Category'] = data['cluster'].map(lambda cluster: 'Tidak Padat' if centroids.loc[cluster].mean() < threshold_low else ('Padat' if centroids.loc[cluster].mean() < threshold_high else 'Sangat Padat'))
     
-    return data
+    # After clustering, calculate silhouette score
+    silhouette_avg = silhouette_score(features, data['cluster'])
+
+    return data, silhouette_avg
+
+
+# Function to display Silhouette Progress Bar
+def SilhouetteProgressBar(silhouette_avg, target):
+    st.markdown("""<style>.stProgress > div > div > div > div { background-image: linear-gradient(to right, #99ff99 , #FFFF00)}</style>""", unsafe_allow_html=True)
+
+    current = silhouette_avg
+    percent = round((current / target * 100))
+    mybar = st.progress(0)
+
+    if percent >= 100:
+        st.subheader("Target silhouette score achieved!")
+    else:
+        st.write("Current silhouette score: {:.2f}".format(current))
+        st.write("You have {:.2f}% of the target silhouette score".format(percent))
+
+        for percent_complete in range(percent):
+            time.sleep(0.1)
+            mybar.progress(percent_complete + 1, text="Silhouette Score Percentage")
+    
 
 # Function to create GeoMap with Plotly Express
 def create_geomap(data, geojson_data, selected_color_theme):
@@ -83,17 +103,20 @@ def ahc_page():
     # Load data from the home page
     data_from_homepage = pd.read_csv('Data_Original_Update.csv')  # Replace with your actual data
 
-    # Perform Agglomerative Hierarchical Clustering
-    df_clustered = ahc_clustering(data_from_homepage, n_clusters, linkage)
+     # Perform Agglomerative Hierarchical Clustering
+    df_clustered, silhouette_avg = ahc_clustering(data_from_homepage, n_clusters, linkage)
 
-    # Save the clustered data in session_state
+    # Save the clustered data and silhouette score in session_state
     st.session_state.df_clustered = df_clustered
+    st.session_state.silhouette_avg = silhouette_avg
 
     
 
     tab1, tab2 = st.tabs(["DATASET", "VISUALISASI MAP"])
 
     with tab1:
+        
+        SilhouetteProgressBar(silhouette_avg, target=1.0)
         # Display metrics for each cluster
         for cluster_num in range(n_clusters):
             # Get the density category for the current cluster
