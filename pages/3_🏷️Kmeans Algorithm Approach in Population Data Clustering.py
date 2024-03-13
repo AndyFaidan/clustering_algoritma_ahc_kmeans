@@ -59,7 +59,7 @@ def SilhouetteProgressBar(silhouette_avg, target):
         st.write("You have {:.2f}% of the target silhouette score".format(percent))
 
         for percent_complete in range(percent):
-            time.sleep(1)
+            time.sleep(0.5)
             mybar.progress(percent_complete + 1, text="Silhouette Score Percentage")
     
 # Function to create GeoMap with Plotly Express
