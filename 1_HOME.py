@@ -183,15 +183,15 @@ with st.expander("HeatMap", expanded=False):
     st.altair_chart(heatmap_chart, use_container_width=True)
 
 with st.expander('Informasi', expanded=True):
-    st.write('''
+    st.info(f'''
         - Data: [Data Penduduk Kabupaten Purwakarta](your_data_source_link).
-        - :orange[**Area Teratas berdasarkan Penduduk**]: Area dengan penduduk tertinggi untuk tahun yang dipilih.
-        - :orange[**Perubahan Penduduk Ekstrem**]: Area dengan peningkatan dan penurunan penduduk terbesar dari tahun sebelumnya.
-        - :information_source: **Rata-rata Penduduk:** Rata-rata penduduk untuk tahun yang dipilih.
-        - :information_source: **Rata-rata Penduduk (Area Teratas):** Rata-rata penduduk di area teratas.
-        - :information_source: **Modus Penduduk (Area Teratas):** Modus penduduk di area teratas.
-        - :bar_chart: **Visualisasi Penduduk:** Peta korelasi dan peta panas menampilkan total penduduk di berbagai area.
-        - :chart_with_upwards_trend: **Tren Penduduk:** Kenaikan/Penurunan, Area Teratas/Terendah berdasarkan Penduduk, dan Perubahan Penduduk Ekstrem divisualisasikan untuk memberikan wawasan tentang dinamika penduduk.
+        - :orange[**Area Teratas berdasarkan Penduduk**]: Area dengan penduduk tertinggi untuk tahun {selected_year}.
+        - :orange[**Perubahan Penduduk Ekstrem**]: Area dengan peningkatan dan penurunan penduduk terbesar dari tahun sebelumnya ({selected_year - 1} ke {selected_year}).
+        - :information_source: **Rata-rata Penduduk ({selected_year}):** {merged_df[merged_df['year'] == selected_year]['population'].mean():,.0f}
+        - :information_source: **Rata-rata Penduduk (Area Teratas, {selected_year}):** {filtered_df['population'].mean():,.0f}
+        - :information_source: **Modus Penduduk (Area Teratas, {selected_year}):** {filtered_df['population'].mode()[0]:,.0f}
+        - :bar_chart: **Visualisasi Penduduk:** Peta korelasi dan peta panas menampilkan total penduduk di berbagai area untuk tahun {selected_year}.
+        - :chart_with_upwards_trend: **Tren Penduduk:** Kenaikan/Penurunan, Area Teratas/Terendah berdasarkan Penduduk, dan Perubahan Penduduk Ekstrem divisualisasikan untuk memberikan wawasan tentang dinamika penduduk pada tahun {selected_year}.
     ''')
 
 if __name__ == "__main__":
