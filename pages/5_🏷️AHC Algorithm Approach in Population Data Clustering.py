@@ -320,27 +320,39 @@ def ahc_page():
             st.plotly_chart(fig, use_container_width=True)
     
         with col2:
-            st.write("Pilih jumlah cluster spesifik untuk melihat detail:")
+            st.write("Pilih jumlah klaster spesifik untuk melihat detail:")
             selected_clusters = st.selectbox("Jumlah Cluster", cluster_range)
             linkage_method = st.selectbox("Metode Linkage", ['single', 'average', 'complete'])
     
-            df_selected_clusters, silhouette_selected = ahc_clustering(data_from_homepage, n_clusters=selected_clusters, linkage=linkage_method)
-            st.write(f"Skor Silhouette untuk {selected_clusters} cluster dengan linkage {linkage_method}: {silhouette_selected}")
+            # Perform clustering for the selected number of clusters and linkage method
+            df_selected_clusters, silhouette_selected = ahc_clustering(data_from_homepage, n_clusters=selected_clusters,
+                                                                       linkage=linkage_method)
     
-        with st.expander('Informasi', expanded=True):
-            st.info('''
+            # Display silhouette score and evaluation
+            st.write(f"Skor Silhouette untuk {selected_clusters} klaster dengan linkage {linkage_method}: {silhouette_selected:.2f}")
+    
+            # Automatic evaluation based on silhouette score
+            if 0.7 < silhouette_selected <= 1.0:
+                st.success('Struktur sangat kuat (Skor Silhouette lebih dari 0.70). Clustering sangat baik dan klaster yang terbentuk jelas terdefinisi dengan baik.')
+            elif 0.5 < silhouette_selected <= 0.7:
+                st.info('Struktur sedang (Skor Silhouette antara 0.50 dan 0.70). Clustering cukup baik.')
+            elif 0.25 < silhouette_selected <= 0.5:
+                st.warning('Struktur lemah (Skor Silhouette antara 0.25 dan 0.50). Clustering kurang baik.')
+            else:
+                st.error('Tidak ada struktur (Skor Silhouette kurang dari 0.25). Clustering sangat buruk.')
+    
+            # Additional information
+            st.write('''
                 ### Metode Linkage dalam AHC
-                **Single Linkage:** Metode ini mengelompokkan dua cluster dengan jarak minimum antara titik-titik mereka. Cocok untuk mendeteksi bentuk cluster memanjang, tetapi dapat menghasilkan chaining effect.
-                **Average Linkage:** Metode ini mengelompokkan dua cluster berdasarkan jarak rata-rata antara semua pasangan titik. Metode ini seimbang antara single dan complete linkage, sering menghasilkan cluster yang lebih stabil.
-                **Complete Linkage:** Metode ini mengelompokkan dua cluster berdasarkan jarak maksimum antara titik-titik mereka. Cocok untuk menemukan cluster yang kompak dan bulat, tetapi cenderung sensitif terhadap outlier.
-    
-                ### Skor Silhouette
-                Skor Silhouette mengukur seberapa mirip objek dengan cluster mereka sendiri dibandingkan dengan cluster lainnya. Skor ini berkisar dari -1 hingga 1, di mana nilai yang lebih tinggi menunjukkan cluster yang lebih baik terdefinisi. Skor negatif menunjukkan objek yang lebih cocok ke cluster lain, sedangkan skor mendekati 0 menunjukkan objek di batas dua cluster.
+                - **Single Linkage:** Mengelompokkan dua klaster dengan jarak minimum antara titik-titik mereka. Cocok untuk mendeteksi bentuk klaster memanjang, tetapi dapat menghasilkan efek rantai.
+                - **Average Linkage:** Mengelompokkan dua klaster berdasarkan jarak rata-rata antara semua pasangan titik. Seimbang antara single dan complete linkage, sering menghasilkan klaster yang lebih stabil.
+                - **Complete Linkage:** Mengelompokkan dua klaster berdasarkan jarak maksimum antara titik-titik mereka. Cocok untuk menemukan klaster yang kompak dan bulat, tetapi cenderung sensitif terhadap outlier.
     
                 ### Interpretasi Visualisasi
-                - **Grafik Garis Skor Silhouette:** Menampilkan skor silhouette untuk berbagai jumlah cluster dan metode linkage. Gunakan grafik ini untuk menentukan metode dan jumlah cluster yang optimal berdasarkan skor silhouette tertinggi.
-                - **Detail Cluster:** Pilih jumlah cluster dan metode linkage untuk melihat skor silhouette spesifik. Ini membantu dalam memahami performa metode linkage yang berbeda dengan jumlah cluster tertentu.
+                - **Grafik Garis Skor Silhouette:** Menampilkan skor silhouette untuk berbagai jumlah klaster dan metode linkage. Gunakan grafik ini untuk menentukan metode dan jumlah klaster yang optimal berdasarkan skor silhouette tertinggi.
+                - **Detail Klaster:** Pilih jumlah klaster dan metode linkage untuk melihat skor silhouette spesifik. Ini membantu dalam memahami performa metode linkage yang berbeda dengan jumlah klaster tertentu.
             ''')
+
 
 if __name__ == "__main__":
     # Call the ahc_page function
