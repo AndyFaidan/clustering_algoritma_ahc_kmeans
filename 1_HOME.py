@@ -4,7 +4,6 @@ import pandas as pd
 import plotly.express as px
 import altair as alt
 
-
 # Set page configuration
 st.set_page_config(
     page_title="Analisis Clustering Kepadatan Penduduk",
@@ -25,7 +24,7 @@ geojson_file = 'andy.geojson'
 gdf_geojson = gpd.read_file(geojson_file)
 
 # Memuat file CSV, set kolom 'Unnamed: 0' sebagai indeks
-csv_file = 'data_kab.pwk.csv'
+csv_file = 'AUDIT_data_kab.pwk.csv'
 df_csv = pd.read_csv(csv_file, index_col=0)
 
 # Menggabungkan dataset berdasarkan DESA_1
@@ -135,8 +134,19 @@ with col[0]:
         last_state_delta = ''
     st.metric(label=last_state_name, value=last_state_population, delta=last_state_delta)
 
-    total_DESA_1 = df_population_difference_sorted['DESA_1'].nunique()
-    st.metric(label="Total DESA_1", value=total_DESA_1)
+    if selected_year > 2010:
+        total_population_selected_year = df_reshaped[df_reshaped['year'] == selected_year]['population'].sum()
+        total_population_last_year = df_reshaped[df_reshaped['year'] == selected_year - 1]['population'].sum()
+        population_difference = total_population_selected_year - total_population_last_year
+
+        total_population_name = "Total Populasi"
+        total_population_value = format_number(total_population_selected_year)
+        total_population_delta = format_number(population_difference) if population_difference != 0 else "0"
+
+        st.metric(label=total_population_name, value=total_population_value, delta=total_population_delta)
+    else:
+        st.metric(label="-", value="-", delta="")
+
 
 
 with col[1]:
@@ -193,6 +203,7 @@ with st.expander('Informasi', expanded=True):
         - :bar_chart: **Visualisasi Penduduk:** Peta korelasi dan peta panas menampilkan total penduduk di berbagai area untuk tahun {selected_year}.
         - :chart_with_upwards_trend: **Tren Penduduk:** Kenaikan/Penurunan, Area Teratas/Terendah berdasarkan Penduduk, dan Perubahan Penduduk Ekstrem divisualisasikan untuk memberikan wawasan tentang dinamika penduduk pada tahun {selected_year}.
     ''')
+
 
 if __name__ == "__main__":
     # Call the homepage function
