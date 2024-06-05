@@ -198,7 +198,7 @@ with c3:
         st.write("Berdasarkan analisis menggunakan Elbow Method dan Silhouette Score, kita dapat menyimpulkan:")
         
         # Menentukan jumlah klaster optimal dari Elbow Method
-        optimal_clusters = 3  # Ganti dengan hasil analisis Elbow Method
+        optimal_clusters = 2  # Ganti dengan hasil analisis Elbow Method
         st.write(f"Jumlah klaster optimal berdasarkan Elbow Method: {optimal_clusters}")
         
         # Menampilkan Silhouette Score tertinggi
