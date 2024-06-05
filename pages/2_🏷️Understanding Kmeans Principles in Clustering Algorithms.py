@@ -20,7 +20,7 @@ with open('style.css')as f:
  
 st.header(" UNDERSTANDING ALGORITMA KMEANS ")
 with st.expander("⬇ RUMUS SSE (Sum of Squared Errors) :"):
-st.latex(r"SSE = \sum_{i=1}^{k} \sum_{j=1}^{n} ||x_{ij} - c_i||^2")
+     st.latex(r"SSE = \sum_{i=1}^{k} \sum_{j=1}^{n} ||x_{ij} - c_i||^2")
      st.write("di mana:")
      st.write("𝑘 adalah jumlah klaster yang diuji,")
      st.write("𝑛 adalah jumlah total sampel data,")
