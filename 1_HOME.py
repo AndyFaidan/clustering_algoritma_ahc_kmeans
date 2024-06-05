@@ -3,6 +3,8 @@ import geopandas as gpd
 import pandas as pd
 import plotly.express as px
 import altair as alt
+import plotly.graph_objects as go
+
 
 # Set page configuration
 st.set_page_config(
@@ -47,9 +49,18 @@ selected_color_theme = st.sidebar.selectbox('Pilih tema warna', color_theme_list
 # Memfilter data untuk tahun yang dipilih
 filtered_df = merged_df[['DESA_1', 'geometry', 'year', 'population']].loc[merged_df['year'] == selected_year]
 
+# Sidebar untuk pemilihan DESA_1
+selected_DESA = st.sidebar.selectbox('Pilih DESA', sorted(merged_df['DESA_1'].unique()))
+
+# Memfilter data untuk DESA yang dipilih
+filtered_df_DESA = filtered_df[filtered_df['DESA_1'] == selected_DESA]
+
 # Menghitung pusat dan zoom berdasarkan bounding box geometri yang dipilih
 center_lat, center_lon = filtered_df.geometry.centroid.y.mean(), filtered_df.geometry.centroid.x.mean()
 zoom = 8.5  # Sesuaikan tingkat zoom
+# Ambil koordinat lon dan lat untuk DESA yang dipilih
+selected_lon = filtered_df_DESA.geometry.centroid.x.values[0]
+selected_lat = filtered_df_DESA.geometry.centroid.y.values[0]
 
 # Membuat peta interaktif menggunakan Plotly Express
 fig = px.choropleth_mapbox(
@@ -64,6 +75,19 @@ fig = px.choropleth_mapbox(
     color_continuous_scale=selected_color_theme,
     range_color=(min(filtered_df['population']), max(filtered_df['population']))
 )
+
+# Menambahkan marker untuk DESA yang dipilih
+fig.add_trace(go.Scattermapbox(
+    mode="markers+text",
+    lon=[selected_lon],
+    lat=[selected_lat],
+    marker=dict(size=14, color="red"),
+    text=[selected_DESA],
+    hoverinfo='text',
+    showlegend=False
+))
+
+
 
 # Menetapkan tata letak peta
 fig.update_layout(
@@ -193,18 +217,16 @@ with st.expander("HeatMap", expanded=False):
     st.altair_chart(heatmap_chart, use_container_width=True)
 
 with st.expander('Informasi', expanded=True):
-    st.info(f'''
+    st.write('''
         - Data: [Data Penduduk Kabupaten Purwakarta](your_data_source_link).
-        - :orange[**Area Teratas berdasarkan Penduduk**]: Area dengan penduduk tertinggi untuk tahun {selected_year}.
-        - :orange[**Perubahan Penduduk Ekstrem**]: Area dengan peningkatan dan penurunan penduduk terbesar dari tahun sebelumnya ({selected_year - 1} ke {selected_year}).
-        - :information_source: **Rata-rata Penduduk ({selected_year}):** {merged_df[merged_df['year'] == selected_year]['population'].mean():,.0f}
-        - :information_source: **Penduduk Tertinggi (Area Teratas, {selected_year}):** {filtered_df.loc[filtered_df['population'].idxmax(), 'DESA_1']} dengan {filtered_df['population'].max():,.0f} penduduk
-        - :information_source: **Penduduk Terendah (Area Teratas, {selected_year}):** {filtered_df.loc[filtered_df['population'].idxmin(), 'DESA_1']} dengan {filtered_df['population'].min():,.0f} penduduk
-        - :bar_chart: **Visualisasi Penduduk:** Peta korelasi dan peta panas menampilkan total penduduk di berbagai area untuk tahun {selected_year}.
-        - :chart_with_upwards_trend: **Tren Penduduk:** Kenaikan/Penurunan, Area Teratas/Terendah berdasarkan Penduduk, dan Perubahan Penduduk Ekstrem divisualisasikan untuk memberikan wawasan tentang dinamika penduduk pada tahun {selected_year}.
+        - :orange[**Area Teratas berdasarkan Penduduk**]: Area dengan penduduk tertinggi untuk tahun yang dipilih.
+        - :orange[**Perubahan Penduduk Ekstrem**]: Area dengan peningkatan dan penurunan penduduk terbesar dari tahun sebelumnya.
+        - :information_source: **Rata-rata Penduduk:** Rata-rata penduduk untuk tahun yang dipilih.
+        - :information_source: **Rata-rata Penduduk (Area Teratas):** Rata-rata penduduk di area teratas.
+        - :information_source: **Modus Penduduk (Area Teratas):** Modus penduduk di area teratas.
+        - :bar_chart: **Visualisasi Penduduk:** Peta korelasi dan peta panas menampilkan total penduduk di berbagai area.
+        - :chart_with_upwards_trend: **Tren Penduduk:** Kenaikan/Penurunan, Area Teratas/Terendah berdasarkan Penduduk, dan Perubahan Penduduk Ekstrem divisualisasikan untuk memberikan wawasan tentang dinamika penduduk.
     ''')
-
-
 
 if __name__ == "__main__":
     # Call the homepage function
