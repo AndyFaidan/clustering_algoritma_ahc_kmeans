@@ -156,25 +156,28 @@ linkage_matrix_single = linkage(X_ahc, method='single')
 cophenet_matrix_single, _ = cophenet(linkage_matrix_single, pdist(X_ahc))
 ccc_single = cophenet_matrix_single.mean()
 
-# Calculate CCC for Complete linkage
-linkage_matrix_complete = linkage(X_ahc, method='complete')
-cophenet_matrix_complete, _ = cophenet(linkage_matrix_complete, pdist(X_ahc))
-ccc_complete = cophenet_matrix_complete.mean()
-
 # Calculate CCC for Average linkage
 linkage_matrix_average = linkage(X_ahc, method='average')
 cophenet_matrix_average, _ = cophenet(linkage_matrix_average, pdist(X_ahc))
 ccc_average = cophenet_matrix_average.mean()
 
+# Calculate CCC for Complete linkage
+linkage_matrix_complete = linkage(X_ahc, method='complete')
+cophenet_matrix_complete, _ = cophenet(linkage_matrix_complete, pdist(X_ahc))
+ccc_complete = cophenet_matrix_complete.mean()
+
+
 # Definisikan tinggi pemotongan untuk setiap metode linkage
-cut_height_ward = 175000  # Sesuaikan dengan visualisasi dendrogram Ward
+cut_height_single = 175000  # Sesuaikan dengan visualisasi dendrogram single
+cut_height_average = 5.0    # Sesuaikan dengan visualisasi dendrogram average
 cut_height_complete = 10.0  # Sesuaikan dengan visualisasi dendrogram Complete
-cut_height_average = 5.0
+
 
 # Menggunakan fcluster untuk mendapatkan label klaster
-labels_ward = fcluster(linkage_matrix_single, t=cut_height_ward, criterion='distance')
-labels_complete = fcluster(linkage_matrix_complete, t=cut_height_complete, criterion='distance')
+labels_single = fcluster(linkage_matrix_single, t=cut_height_single, criterion='distance')
 labels_average = fcluster(linkage_matrix_average, t=cut_height_average, criterion='distance')
+labels_complete = fcluster(linkage_matrix_complete, t=cut_height_complete, criterion='distance')
+
 
 # Menampilkan kesimpulan
 c1, c2, c3 = st.columns(3)
@@ -189,23 +192,10 @@ with c1:
         plt.ylabel('Jarak')
         st.pyplot()
 
-        st.write(f"Cophenetic Correlation Coefficient (CCC) untuk Dendrogram AHC (Ward): {ccc_single:.4f}")
+        st.write(f"Cophenetic Correlation Coefficient (CCC) untuk Dendrogram AHC (Single): {ccc_single:.4f}")
 
 with c2:
-    with st.expander("⬇ DENDROGRAM COMPLETE"):
-        # Visualisasi Dendrogram untuk Complete
-        plt.figure(figsize=(8, 6))
-        dendrogram(linkage_matrix_complete)
-        plt.title('Dendrogram AHC (Complete)')
-        plt.xlabel('Indeks Data')
-        plt.ylabel('Jarak')
-        st.pyplot()
-
-        st.write(f"Cophenetic Correlation Coefficient (CCC) untuk Dendrogram AHC (Complete): {ccc_complete:.4f}")
-        st.write(f"Jumlah klaster optimal untuk metode linkage Complete: {len(set(labels_complete))}")
-
-with c3:
-    with st.expander("⬇ DENDROGRAM AVERAGE"):
+     with st.expander("⬇ DENDROGRAM AVERAGE"):
         # Visualisasi Dendrogram untuk Average
         plt.figure(figsize=(8, 6))
         dendrogram(linkage_matrix_average)
@@ -216,12 +206,27 @@ with c3:
 
         st.write(f"Cophenetic Correlation Coefficient (CCC) untuk Dendrogram AHC (Average): {ccc_average:.4f}")
         st.write(f"Jumlah klaster optimal untuk metode linkage Average: {len(set(labels_average))}")
+    
+
+with c3:
+     with st.expander("⬇ DENDROGRAM COMPLETE"):
+        # Visualisasi Dendrogram untuk Complete
+        plt.figure(figsize=(8, 6))
+        dendrogram(linkage_matrix_complete)
+        plt.title('Dendrogram AHC (Complete)')
+        plt.xlabel('Indeks Data')
+        plt.ylabel('Jarak')
+        st.pyplot()
+
+        st.write(f"Cophenetic Correlation Coefficient (CCC) untuk Dendrogram AHC (Complete): {ccc_complete:.4f}")
+        st.write(f"Jumlah klaster optimal untuk metode linkage Complete: {len(set(labels_complete))}")
+   
 
 with st.expander("⬇ LINKAGE INFORMATION"):
-    st.write("Complete Linkage: Menggunakan jarak maksimum antara anggota klaster.")
     st.write("Single Linkage: Menggunakan jarak minimum antara anggota klaster.")
     st.write("Average Linkage: Menggunakan rata-rata jarak antara semua pasangan anggota klaster.")
-    st.write("Ward's Method: Menggunakan kriteria minimisasi varians dalam klaster.")
+    st.write("Complete Linkage: Menggunakan jarak maksimum antara anggota klaster.")
+   
 # Assuming X_ahc is already defined
 # Your clustering and silhouette score calculation code
 silhouette_scores_single = []
@@ -289,7 +294,7 @@ silhouette_df = pd.DataFrame({
 
 c1,c2 = st.columns(2)
 with c1:
-    with st.expander("⬇ PERBANDINGAN METODE SINGLE, AVERAGE DAN COMPLETE DENGAN Cophenetic Correlation Coefficient"):
+    with st.expander("⬇ PERBANDINGAN METODE SINGLE, AVERAGE DAN COMPLETE DENGAN COPHENETIC CORRELATION COEFFICIENT"):
         # Membuat plot perbandingan CCC
         fig_ccc = px.bar(ccc_comparison_df, x='Metode', y='CCC', 
                         title='Perbandingan Cophenetic Correlation Coefficient (CCC)',
