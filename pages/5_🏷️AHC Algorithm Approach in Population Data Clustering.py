@@ -325,8 +325,19 @@ def ahc_page():
             linkage_method = st.selectbox("Linkage Method", ['single', 'average', 'complete'])
             
             df_selected_clusters, silhouette_selected = ahc_clustering(data_from_homepage, n_clusters=selected_clusters, linkage=linkage_method)
-            st.write(f"Silhouette Score for {selected_clusters} clusters using {linkage_method} linkage: {silhouette_selected}")
-
+           st.write(f"Silhouette Score for {selected_clusters} clusters using {linkage_method} linkage: {silhouette_selected}")
+        
+    with st.expander('Informasi', expanded=True):
+        st.info(f'''
+            - Data: [Data Penduduk Kabupaten Purwakarta](your_data_source_link).
+            - :orange[**Area Teratas berdasarkan Penduduk**]: Area dengan penduduk tertinggi untuk tahun {selected_year}.
+            - :orange[**Perubahan Penduduk Ekstrem**]: Area dengan peningkatan dan penurunan penduduk terbesar dari tahun sebelumnya ({selected_year - 1} ke {selected_year}).
+            - :information_source: **Rata-rata Penduduk ({selected_year}):** {merged_df[merged_df['year'] == selected_year]['population'].mean():,.0f}
+            - :information_source: **Penduduk Tertinggi (Area Teratas, {selected_year}):** {filtered_df.loc[filtered_df['population'].idxmax(), 'DESA_1']} dengan {filtered_df['population'].max():,.0f} penduduk
+            - :information_source: **Penduduk Terendah (Area Teratas, {selected_year}):** {filtered_df.loc[filtered_df['population'].idxmin(), 'DESA_1']} dengan {filtered_df['population'].min():,.0f} penduduk
+            - :bar_chart: **Visualisasi Penduduk:** Peta korelasi dan peta panas menampilkan total penduduk di berbagai area untuk tahun {selected_year}.
+            - :chart_with_upwards_trend: **Tren Penduduk:** Kenaikan/Penurunan, Area Teratas/Terendah berdasarkan Penduduk, dan Perubahan Penduduk Ekstrem divisualisasikan untuk memberikan wawasan tentang dinamika penduduk pada tahun {selected_year}.
+        ''')
 
         
 
