@@ -284,63 +284,63 @@ def ahc_page():
             Terima kasih telah menggunakan aplikasi ini. Semoga hasil analisis ini bermanfaat untuk pengambilan keputusan dan pengembangan wilayah.
             '''.format(n_clusters, linkage, silhouette_score))
     with tab3:
-    col1, col2 = st.columns(2)
-
-    # Prepare silhouette score data for different linkage methods
-    silhouette_scores = []
-    cluster_range = range(2, 51)
-    for method in ['single', 'average', 'complete']:
-        scores = []
-        for n in cluster_range:
-            _, score = ahc_clustering(data_from_homepage, n_clusters=n, linkage=method)
-            scores.append(score)
-        silhouette_scores.append(scores)
-
-    silhouette_df = pd.DataFrame({
-        'Jumlah Cluster': cluster_range,
-        'Single Linkage': silhouette_scores[0],
-        'Average Linkage': silhouette_scores[1],
-        'Complete Linkage': silhouette_scores[2]
-    })
-
-    with col1:
-        # Display line plot for silhouette scores for different linkage methods
-        fig = px.line(
-            silhouette_df,
-            x='Jumlah Cluster',
-            y=['Single Linkage', 'Average Linkage', 'Complete Linkage'],
-            labels={'value': 'Silhouette Score', 'variable': 'Metode'},
-            title='Silhouette Score untuk Berbagai Jumlah Cluster',
-            color_discrete_map={
-                'Single Linkage': 'blue',
-                'Average Linkage': 'green',
-                'Complete Linkage': 'red'
-            }
-        )
-        st.plotly_chart(fig, use_container_width=True)
-
-    with col2:
-        st.write("Pilih jumlah cluster spesifik untuk melihat detail:")
-        selected_clusters = st.selectbox("Jumlah Cluster", cluster_range)
-        linkage_method = st.selectbox("Metode Linkage", ['single', 'average', 'complete'])
-
-        df_selected_clusters, silhouette_selected = ahc_clustering(data_from_homepage, n_clusters=selected_clusters, linkage=linkage_method)
-        st.write(f"Skor Silhouette untuk {selected_clusters} cluster dengan linkage {linkage_method}: {silhouette_selected}")
-
-    with st.expander('Informasi', expanded=True):
-        st.info('''
-            ### Metode Linkage dalam AHC
-            **Single Linkage:** Metode ini mengelompokkan dua cluster dengan jarak minimum antara titik-titik mereka. Cocok untuk mendeteksi bentuk cluster memanjang, tetapi dapat menghasilkan chaining effect.
-            **Average Linkage:** Metode ini mengelompokkan dua cluster berdasarkan jarak rata-rata antara semua pasangan titik. Metode ini seimbang antara single dan complete linkage, sering menghasilkan cluster yang lebih stabil.
-            **Complete Linkage:** Metode ini mengelompokkan dua cluster berdasarkan jarak maksimum antara titik-titik mereka. Cocok untuk menemukan cluster yang kompak dan bulat, tetapi cenderung sensitif terhadap outlier.
-
-            ### Skor Silhouette
-            Skor Silhouette mengukur seberapa mirip objek dengan cluster mereka sendiri dibandingkan dengan cluster lainnya. Skor ini berkisar dari -1 hingga 1, di mana nilai yang lebih tinggi menunjukkan cluster yang lebih baik terdefinisi. Skor negatif menunjukkan objek yang lebih cocok ke cluster lain, sedangkan skor mendekati 0 menunjukkan objek di batas dua cluster.
-
-            ### Interpretasi Visualisasi
-            - **Grafik Garis Skor Silhouette:** Menampilkan skor silhouette untuk berbagai jumlah cluster dan metode linkage. Gunakan grafik ini untuk menentukan metode dan jumlah cluster yang optimal berdasarkan skor silhouette tertinggi.
-            - **Detail Cluster:** Pilih jumlah cluster dan metode linkage untuk melihat skor silhouette spesifik. Ini membantu dalam memahami performa metode linkage yang berbeda dengan jumlah cluster tertentu.
-        ''')
+        col1, col2 = st.columns(2)
+    
+        # Prepare silhouette score data for different linkage methods
+        silhouette_scores = []
+        cluster_range = range(2, 51)
+        for method in ['single', 'average', 'complete']:
+            scores = []
+            for n in cluster_range:
+                _, score = ahc_clustering(data_from_homepage, n_clusters=n, linkage=method)
+                scores.append(score)
+            silhouette_scores.append(scores)
+    
+        silhouette_df = pd.DataFrame({
+            'Jumlah Cluster': cluster_range,
+            'Single Linkage': silhouette_scores[0],
+            'Average Linkage': silhouette_scores[1],
+            'Complete Linkage': silhouette_scores[2]
+        })
+    
+        with col1:
+            # Display line plot for silhouette scores for different linkage methods
+            fig = px.line(
+                silhouette_df,
+                x='Jumlah Cluster',
+                y=['Single Linkage', 'Average Linkage', 'Complete Linkage'],
+                labels={'value': 'Silhouette Score', 'variable': 'Metode'},
+                title='Silhouette Score untuk Berbagai Jumlah Cluster',
+                color_discrete_map={
+                    'Single Linkage': 'blue',
+                    'Average Linkage': 'green',
+                    'Complete Linkage': 'red'
+                }
+            )
+            st.plotly_chart(fig, use_container_width=True)
+    
+        with col2:
+            st.write("Pilih jumlah cluster spesifik untuk melihat detail:")
+            selected_clusters = st.selectbox("Jumlah Cluster", cluster_range)
+            linkage_method = st.selectbox("Metode Linkage", ['single', 'average', 'complete'])
+    
+            df_selected_clusters, silhouette_selected = ahc_clustering(data_from_homepage, n_clusters=selected_clusters, linkage=linkage_method)
+            st.write(f"Skor Silhouette untuk {selected_clusters} cluster dengan linkage {linkage_method}: {silhouette_selected}")
+    
+        with st.expander('Informasi', expanded=True):
+            st.info('''
+                ### Metode Linkage dalam AHC
+                **Single Linkage:** Metode ini mengelompokkan dua cluster dengan jarak minimum antara titik-titik mereka. Cocok untuk mendeteksi bentuk cluster memanjang, tetapi dapat menghasilkan chaining effect.
+                **Average Linkage:** Metode ini mengelompokkan dua cluster berdasarkan jarak rata-rata antara semua pasangan titik. Metode ini seimbang antara single dan complete linkage, sering menghasilkan cluster yang lebih stabil.
+                **Complete Linkage:** Metode ini mengelompokkan dua cluster berdasarkan jarak maksimum antara titik-titik mereka. Cocok untuk menemukan cluster yang kompak dan bulat, tetapi cenderung sensitif terhadap outlier.
+    
+                ### Skor Silhouette
+                Skor Silhouette mengukur seberapa mirip objek dengan cluster mereka sendiri dibandingkan dengan cluster lainnya. Skor ini berkisar dari -1 hingga 1, di mana nilai yang lebih tinggi menunjukkan cluster yang lebih baik terdefinisi. Skor negatif menunjukkan objek yang lebih cocok ke cluster lain, sedangkan skor mendekati 0 menunjukkan objek di batas dua cluster.
+    
+                ### Interpretasi Visualisasi
+                - **Grafik Garis Skor Silhouette:** Menampilkan skor silhouette untuk berbagai jumlah cluster dan metode linkage. Gunakan grafik ini untuk menentukan metode dan jumlah cluster yang optimal berdasarkan skor silhouette tertinggi.
+                - **Detail Cluster:** Pilih jumlah cluster dan metode linkage untuk melihat skor silhouette spesifik. Ini membantu dalam memahami performa metode linkage yang berbeda dengan jumlah cluster tertentu.
+            ''')
 
 if __name__ == "__main__":
     # Call the ahc_page function
