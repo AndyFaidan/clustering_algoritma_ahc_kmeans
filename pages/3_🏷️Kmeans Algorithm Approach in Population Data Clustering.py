@@ -110,7 +110,6 @@ def create_geomap(data, geojson_data, selected_color_theme):
     # Show the GeoMap
     st.plotly_chart(fig, use_container_width=True)
 
-
 def kmeans_page():
     center = True
     st.header("KMeans Clustering Page", anchor='center' if center else 'left')
