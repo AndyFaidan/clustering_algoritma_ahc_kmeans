@@ -55,17 +55,26 @@ def SilhouetteProgressBar(silhouette_avg, target):
     if percent >= 100:
         st.subheader("Target silhouette score achieved!")
     else:
-        st.write("Current silhouette score: {:.2f}".format(current))
-        st.write("You have {:.2f}% of the target silhouette score".format(percent))
+        st.write("Skor yang dicapai {:.2f}% dari skor target".format(percent))
 
         for percent_complete in range(percent):
-            time.sleep(0.5)
+            time.sleep(0.1)
             mybar.progress(percent_complete + 1, text="Silhouette Score Percentage")
     
 # Function to create GeoMap with Plotly Express
 def create_geomap(data, geojson_data, selected_color_theme):
     # Merge GeoJSON data with clustered data based on 'DESA_1'
     merged_data = geojson_data.merge(data, left_on='DESA_1', right_on='DESA_1')
+
+    # Sidebar to select 'DESA_1'
+    selected_DESA = st.sidebar.selectbox("Pilih DESA_1", merged_data['DESA_1'].unique())
+
+    # Filter data for selected 'DESA_1'
+    filtered_df_DESA = merged_data[merged_data['DESA_1'] == selected_DESA]
+
+    # Get coordinates for the selected 'DESA_1'
+    selected_lon = filtered_df_DESA.geometry.centroid.x.values[0]
+    selected_lat = filtered_df_DESA.geometry.centroid.y.values[0]
 
     # Plot GeoMap with Plotly Express
     fig = px.choropleth_mapbox(
@@ -80,7 +89,19 @@ def create_geomap(data, geojson_data, selected_color_theme):
         center={"lat": merged_data.geometry.centroid.y.mean(), "lon": merged_data.geometry.centroid.x.mean()},
         labels={'cluster': 'Cluster'}
     )
-    # Set the map to full-width
+
+    # Add marker for the selected 'DESA_1'
+    fig.add_trace(go.Scattermapbox(
+        mode="markers+text",
+        lon=[selected_lon],
+        lat=[selected_lat],
+        marker=dict(size=14, color="red"),
+        text=[selected_DESA],
+        hoverinfo='text',
+        showlegend=False
+    ))
+
+    # Set the map layout
     fig.update_layout(
         autosize=True,
         margin=dict(l=0, r=0, t=0, b=0),
@@ -89,10 +110,10 @@ def create_geomap(data, geojson_data, selected_color_theme):
     # Show the GeoMap
     st.plotly_chart(fig, use_container_width=True)
 
+
 def kmeans_page():
     center = True
     st.header("KMeans Clustering Page", anchor='center' if center else 'left')
-    st.latex(r"SSE = \sum_{i=1}^{k} \sum_{j=1}^{n} ||x_{ij} - c_i||^2")
 
     # Sidebar: Choose the number of clusters
     num_clusters = st.sidebar.slider("Number of Clusters", min_value=2, max_value=10, value=3)
@@ -102,7 +123,7 @@ def kmeans_page():
     selected_year = st.sidebar.selectbox('Select Year', ['2011', '2012', '2013', '2014', '2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023'])
 
     # Load data from the home page
-    data_from_homepage = pd.read_csv('Data_Original_Update.csv')  # Replace with your actual data
+    data_from_homepage = pd.read_csv('AUDIT-Data_Original_Update.csv')  # Replace with your actual data
 
     # Perform KMeans clustering
     df_clustered, silhouette_avg, elbow_data = kmeans_clustering(data_from_homepage, num_clusters, selected_year)
@@ -125,7 +146,10 @@ def kmeans_page():
 
             cluster_data = df_clustered[df_clustered['cluster'] == cluster_num][["DESA_1", "cluster", selected_year]]
 
-            with st.expander(f"Cluster {cluster_num + 1} Data Table - {density_category}", expanded=True):
+            # Hitung jumlah anggota klaster
+            num_members = cluster_data.shape[0]
+
+            with st.expander(f"Cluster {cluster_num + 1} Data Table - {density_category} ({num_members} Desa)", expanded=True):
                 st.dataframe(cluster_data,
                             column_order=("DESA_1", selected_year, "cluster"),
                             hide_index=True,
