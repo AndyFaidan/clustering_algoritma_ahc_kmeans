@@ -67,7 +67,7 @@ def create_geomap(data, geojson_data, selected_color_theme):
     merged_data = geojson_data.merge(data, left_on='DESA_1', right_on='DESA_1')
 
     # Sidebar to select 'DESA_1'
-    selected_DESA = st.sidebar.selectbox("Pilih DESA_1", merged_data['DESA_1'].unique())
+    selected_DESA = st.sidebar.selectbox("Pilih Desa ", merged_data['DESA_1'].unique())
 
     # Filter data for selected 'DESA_1'
     filtered_df_DESA = merged_data[merged_data['DESA_1'] == selected_DESA]
