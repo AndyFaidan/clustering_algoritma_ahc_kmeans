@@ -67,7 +67,7 @@ def create_geomap(data, geojson_data, selected_color_theme):
     merged_data = geojson_data.merge(data, left_on='DESA_1', right_on='DESA_1')
 
     # Sidebar to select 'DESA_1'
-    selected_DESA = st.sidebar.selectbox("Pilih Desa ", merged_data['DESA_1'].unique())
+    selected_DESA = st.sidebar.selectbox("Pilih Desa pada map ", merged_data['DESA_1'].unique())
 
     # Filter data for selected 'DESA_1'
     filtered_df_DESA = merged_data[merged_data['DESA_1'] == selected_DESA]
@@ -172,9 +172,8 @@ def kmeans_page():
         geojson_data = gpd.read_file(geojson_path)
 
         # Theme color selection for GeoMap
-        st.sidebar.title("GeoMap Color Theme Selection")
         color_theme_list = ['Blues', 'cividis', 'Greens', 'inferno', 'magma', 'plasma', 'reds', 'rainbow', 'turbo', 'viridis']
-        selected_color_theme = st.sidebar.selectbox('Pilih tema warna', color_theme_list, key="geo_map_color_theme_selector")
+        selected_color_theme = st.sidebar.selectbox('Pilih tema warna pada map', color_theme_list, key="geo_map_color_theme_selector")
         
         with st.container(border=True):
             create_geomap(df_clustered, geojson_data, selected_color_theme)
