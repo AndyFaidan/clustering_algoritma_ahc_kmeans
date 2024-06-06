@@ -29,7 +29,7 @@ def ahc_clustering(data, n_clusters, linkage):
     # Calculate centroid for each cluster
     centroids = data.groupby('cluster')[['2011', '2012', '2013', '2014', '2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023']].mean()
 
-    # Define threshold values (adjust these based on your analysis)
+        # Define threshold values (adjust these based on your analysis)
     threshold_low = 100000  # Example threshold for "not dense"
     threshold_high = 500000  # Example threshold for "dense"
 
@@ -64,28 +64,39 @@ def calculate_ccc(data):
 
 
 # Function to display CCC Progress Bar
-def CCCProgressBar(score, target):
+def CCCProgressBar(score, target, metode):
     st.markdown("""<style>.stProgress > div > div > div > div { background-image: linear-gradient(to right, #99ff99 , #FFFF00)}</style>""", unsafe_allow_html=True)
 
     current = score
     percent = round((current / target * 100))
     mybar = st.progress(0)
 
+    st.write(f"Metode yang dipilih: {metode}")
+
     if percent >= 100:
-        st.subheader("Target score achieved!")
+        st.subheader("Skor target tercapai!")
     else:
-        st.write("Current score: {:.2f}".format(current))
-        st.write("You have {:.2f}% of the target score".format(percent))
+        st.write("Skor yang diCapai {:.2f}% dari skor target".format(percent))
 
         for percent_complete in range(percent):
             time.sleep(0.1)
-            mybar.progress(percent_complete + 1, text="Score Percentage")
+            mybar.progress(percent_complete + 1, text="Persentase Skor")
     
 
 # Function to create GeoMap with Plotly Express
 def create_geomap(data, geojson_data, selected_color_theme):
     # Merge GeoJSON data with clustered data based on 'DESA_1'
     merged_data = geojson_data.merge(data, left_on='DESA_1', right_on='DESA_1')
+
+    # Sidebar to select 'DESA_1'
+    selected_DESA = st.sidebar.selectbox("Pilih DESA_1", merged_data['DESA_1'].unique())
+
+    # Filter data for selected 'DESA_1'
+    filtered_df_DESA = merged_data[merged_data['DESA_1'] == selected_DESA]
+
+    # Get coordinates for the selected 'DESA_1'
+    selected_lon = filtered_df_DESA.geometry.centroid.x.values[0]
+    selected_lat = filtered_df_DESA.geometry.centroid.y.values[0]
 
     # Plot GeoMap with Plotly Express
     fig = px.choropleth_mapbox(
@@ -100,7 +111,19 @@ def create_geomap(data, geojson_data, selected_color_theme):
         center={"lat": merged_data.geometry.centroid.y.mean(), "lon": merged_data.geometry.centroid.x.mean()},
         labels={'cluster': 'Cluster'}
     )
-    # Set the map to full-width
+
+    # Add marker for the selected 'DESA_1'
+    fig.add_trace(go.Scattermapbox(
+        mode="markers+text",
+        lon=[selected_lon],
+        lat=[selected_lat],
+        marker=dict(size=14, color="red"),
+        text=[selected_DESA],
+        hoverinfo='text',
+        showlegend=False
+    ))
+
+    # Set the map layout
     fig.update_layout(
         autosize=True,
         margin=dict(l=0, r=0, t=0, b=0),
@@ -108,6 +131,7 @@ def create_geomap(data, geojson_data, selected_color_theme):
 
     # Show the GeoMap
     st.plotly_chart(fig, use_container_width=True)
+
 
 # Function to handle Agglomerative Hierarchical Clustering page
 def ahc_page():
@@ -144,22 +168,25 @@ def ahc_page():
 
     with tab1:
         
-        # Display CCC Progress Bars based on selected linkage type
+        # Menampilkan Progress Bar CCC berdasarkan jenis linkage yang dipilih
         if linkage == 'single':
-            CCCProgressBar(st.session_state.ccc_single, target=1.0)
+            CCCProgressBar(st.session_state.ccc_single, target=1.0, metode='single')
         elif linkage == 'average':
-            CCCProgressBar(st.session_state.ccc_average, target=1.0)
+            CCCProgressBar(st.session_state.ccc_average, target=1.0, metode='average')
         elif linkage == 'complete':
-            CCCProgressBar(st.session_state.ccc_complete, target=1.0)
+            CCCProgressBar(st.session_state.ccc_complete, target=1.0, metode='complete')
 
-        # Display metrics for each cluster
+        # Menampilkan metrik untuk setiap klaster
         for cluster_num in range(n_clusters):
             # Get the density category for the current cluster
             density_category = df_clustered.loc[df_clustered['cluster'] == cluster_num, 'Density Category'].iloc[0]
 
             cluster_data = df_clustered[df_clustered['cluster'] == cluster_num][["DESA_1", "cluster", st.session_state.selected_year]]
 
-            with st.expander(f"Cluster {cluster_num + 1} Data Table - {density_category}", expanded=True):
+            # Hitung jumlah anggota klaster
+            num_members = cluster_data.shape[0]
+
+            with st.expander(f"Cluster {cluster_num + 1} Data Table - {density_category} ({num_members} Anggota)", expanded=True):
                 st.dataframe(cluster_data,
                             column_order=("DESA_1", st.session_state.selected_year, "cluster"),
                             hide_index=True,
@@ -189,12 +216,14 @@ def ahc_page():
         with st.expander('Desa Maps View Analitycs Clustering', expanded=True):
             create_geomap(df_clustered, geojson_data, selected_color_theme)
 
-            # Show table data when hovering over a marker
+        # Moved "SELECT DATA" to the sidebar
         with st.expander("SELECT DATA"):
             selected_city = st.selectbox("Select a city", df_clustered['DESA_1'])
             selected_row = df_clustered[df_clustered['DESA_1'] == selected_city].squeeze()
-            # Display additional information in a table
-            st.table(selected_row)
+                # Display additional information in the main area
+            st.write("### Selected City Data")
+            st.table(selected_row) 
+            
 
                # Graphs
         col1, col2, col3, = st.columns(3)
@@ -285,7 +314,7 @@ def ahc_page():
             '''.format(n_clusters, linkage, silhouette_score))
     with tab3:
         col1, col2 = st.columns(2)
-    
+
         # Prepare silhouette score data for different linkage methods
         silhouette_scores = []
         cluster_range = range(2, 51)
@@ -295,14 +324,14 @@ def ahc_page():
                 _, score = ahc_clustering(data_from_homepage, n_clusters=n, linkage=method)
                 scores.append(score)
             silhouette_scores.append(scores)
-    
+
         silhouette_df = pd.DataFrame({
             'Jumlah Cluster': cluster_range,
             'Single Linkage': silhouette_scores[0],
             'Average Linkage': silhouette_scores[1],
             'Complete Linkage': silhouette_scores[2]
         })
-    
+
         with col1:
             # Display line plot for silhouette scores for different linkage methods
             fig = px.line(
@@ -318,40 +347,17 @@ def ahc_page():
                 }
             )
             st.plotly_chart(fig, use_container_width=True)
-    
+
         with col2:
-            st.write("Pilih jumlah klaster spesifik untuk melihat detail:")
-            selected_clusters = st.selectbox("Jumlah Cluster", cluster_range)
-            linkage_method = st.selectbox("Metode Linkage", ['single', 'average', 'complete'])
-    
-            # Perform clustering for the selected number of clusters and linkage method
-            df_selected_clusters, silhouette_selected = ahc_clustering(data_from_homepage, n_clusters=selected_clusters,
-                                                                       linkage=linkage_method)
-    
-            # Display silhouette score and evaluation
-            st.write(f"Skor Silhouette untuk {selected_clusters} klaster dengan linkage {linkage_method}: {silhouette_selected:.2f}")
-    
-            # Automatic evaluation based on silhouette score
-            if 0.7 < silhouette_selected <= 1.0:
-                st.success('Struktur sangat kuat (Skor Silhouette lebih dari 0.70). Clustering sangat baik dan klaster yang terbentuk jelas terdefinisi dengan baik.')
-            elif 0.5 < silhouette_selected <= 0.7:
-                st.info('Struktur sedang (Skor Silhouette antara 0.50 dan 0.70). Clustering cukup baik.')
-            elif 0.25 < silhouette_selected <= 0.5:
-                st.warning('Struktur lemah (Skor Silhouette antara 0.25 dan 0.50). Clustering kurang baik.')
-            else:
-                st.error('Tidak ada struktur (Skor Silhouette kurang dari 0.25). Clustering sangat buruk.')
-    
-            # Additional information
-            st.write('''
-                ### Metode Linkage dalam AHC
-                - **Single Linkage:** Mengelompokkan dua klaster dengan jarak minimum antara titik-titik mereka. Cocok untuk mendeteksi bentuk klaster memanjang, tetapi dapat menghasilkan efek rantai.
-                - **Average Linkage:** Mengelompokkan dua klaster berdasarkan jarak rata-rata antara semua pasangan titik. Seimbang antara single dan complete linkage, sering menghasilkan klaster yang lebih stabil.
-                - **Complete Linkage:** Mengelompokkan dua klaster berdasarkan jarak maksimum antara titik-titik mereka. Cocok untuk menemukan klaster yang kompak dan bulat, tetapi cenderung sensitif terhadap outlier.
-    
-                ### Interpretasi Visualisasi
-                - **Grafik Garis Skor Silhouette:** Menampilkan skor silhouette untuk berbagai jumlah klaster dan metode linkage. Gunakan grafik ini untuk menentukan metode dan jumlah klaster yang optimal berdasarkan skor silhouette tertinggi.
-                - **Detail Klaster:** Pilih jumlah klaster dan metode linkage untuk melihat skor silhouette spesifik. Ini membantu dalam memahami performa metode linkage yang berbeda dengan jumlah klaster tertentu.
-            ''')
+            st.write("Choose a specific number of clusters to see details:")
+            selected_clusters = st.selectbox("Number of Clusters", cluster_range)
+            linkage_method = st.selectbox("Linkage Method", ['single', 'average', 'complete'])
+            
+            df_selected_clusters, silhouette_selected = ahc_clustering(data_from_homepage, n_clusters=selected_clusters, linkage=linkage_method)
+            st.write(f"Silhouette Score for {selected_clusters} clusters using {linkage_method} linkage: {silhouette_selected}")
+
+
+        
 
 
 if __name__ == "__main__":
