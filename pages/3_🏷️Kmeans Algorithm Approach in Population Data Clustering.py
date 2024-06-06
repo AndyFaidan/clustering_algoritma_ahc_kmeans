@@ -115,11 +115,10 @@ def kmeans_page():
     st.header("KMeans Clustering Page", anchor='center' if center else 'left')
 
     # Sidebar: Choose the number of clusters
-    num_clusters = st.sidebar.slider("Number of Clusters", min_value=2, max_value=10, value=3)
+    num_clusters = st.sidebar.slider("Number Clusters", min_value=2, max_value=10, value=3)
 
     # Select Year in the Sidebar
-    st.sidebar.title("Select Year")
-    selected_year = st.sidebar.selectbox('Select Year', ['2011', '2012', '2013', '2014', '2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023'])
+    selected_year = st.sidebar.selectbox('Pilih Tahun', ['2011', '2012', '2013', '2014', '2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023'])
 
     # Load data from the home page
     data_from_homepage = pd.read_csv('AUDIT-Data_Original_Update.csv')  # Replace with your actual data
