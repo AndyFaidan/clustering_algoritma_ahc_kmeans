@@ -38,6 +38,7 @@ df_reshaped = df_csv.groupby(['year', 'DESA_1']).agg({'population': 'sum'}).rese
 # Aplikasi Streamlit
 st.title('Visualisasi Distribusi Penduduk')
 
+# Adding a divider line
 st.divider()
 
 # Sidebar untuk pemilihan tahun
