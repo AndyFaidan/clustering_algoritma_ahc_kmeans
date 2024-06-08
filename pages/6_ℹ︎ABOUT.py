@@ -100,6 +100,63 @@ with st.expander("**Tentang Analisis Klaster AHC dan K-Means pada Data BPS Kabup
 
     Analisis klaster dengan AHC dan K-Means diharapkan dapat memberikan gambaran yang lebih dalam tentang populasi Kabupaten Purwakarta. Hasilnya dapat digunakan sebagai dasar untuk kebijakan pembangunan yang lebih efektif, memastikan bahwa sumber daya dialokasikan dengan bijak sesuai dengan kebutuhan unik setiap wilayah.
     ''')
+with c2:
+
+    # Judul dan deskripsi
+    st.title("Video Tutorial tentang K-Means dan AHC Clustering")
+    st.markdown("""
+    Berikut adalah beberapa video YouTube yang menjelaskan tentang K-Means dan Agglomerative Hierarchical Clustering (AHC). Anda dapat menonton video ini langsung di YouTube untuk mendapatkan pemahaman yang lebih baik tentang kedua metode tersebut.
+    """)
+
+    # Embed YouTube video
+    video_url = "https://www.youtube.com/embed/s8K0lO9OFOA?start=1067"
+    video_html = f"""
+        <div style="display: flex; justify-content: center;">
+            <iframe width="1000" height="450" src="{video_url}" 
+            frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+            </iframe>
+        </div>
+    """
+    components.html(video_html, height=450)
+
+    with st.expander("**Tentang Analisis Klaster AHC dan K-Means pada Data BPS Kabupaten Purwakarta**"):
+        st.markdown('''
+        **Pendahuluan: 📊**
+        Bagian ini membahas penerapan Analisis Klaster Agglomerative Hierarchical Clustering (AHC) dan K-Means pada data demografis yang diperoleh dari Badan Pusat Statistik (BPS) Kabupaten Purwakarta. Metode klaster ini memberikan wawasan yang berharga untuk memahami pola dan kelompok dalam populasi, memungkinkan pengambilan keputusan yang terinformasi dan intervensi yang lebih terarah.
+
+        **Pendekatan Utama: 🌐**
+
+        1. **Agglomerative Hierarchical Clustering (AHC):**
+            - AHC adalah metode klaster hierarkis yang secara iteratif menggabungkan titik data yang mirip ke dalam klaster.
+            - Analisis ini bertujuan untuk mengungkap struktur alami dalam data demografis, mengidentifikasi kelompok wilayah dengan karakteristik populasi yang serupa.
+
+        2. **K-Means Clustering:**
+            - K-Means membagi data menjadi 'k' klaster berdasarkan kemiripan.
+            - Dengan menerapkan K-Means pada data BPS Kabupaten Purwakarta, kita bertujuan untuk menemukan segmen populasi yang berbeda dan fitur-fitur yang mendefinisikannya.
+
+        **Sumber Data: 📈**
+
+        Data demografis yang digunakan dalam analisis ini berasal dari Badan Pusat Statistik (BPS) Kabupaten Purwakarta. Data ini mencakup indikator-indikator utama selama beberapa tahun, memberikan pandangan komprehensif tentang lanskap populasi.
+
+        **Tujuan: 🎯**
+
+        Tujuan utama adalah menggunakan teknik klaster untuk mengkategorikan wilayah-wilayah dalam Kabupaten Purwakarta berdasarkan pola demografis. Analisis ini dapat membantu pembuat kebijakan, peneliti, dan otoritas lokal dalam memahami keragaman dalam wilayah tersebut dan merancang strategi pembangunan secara tepat.
+
+        **Manfaat Analisis Klaster: 📚**
+
+        - **Pola yang Memberi Wawasan:** Mengungkap pola dan struktur bawaan dalam populasi Kabupaten Purwakarta, memungkinkan pihak terkait untuk membuat kebijakan yang lebih terfokus.
+        - **Identifikasi Kelompok Demografis:** Memahami kelompok penduduk dengan karakteristik serupa.
+        - **Perencanaan Pembangunan:** Menyediakan dasar untuk perencanaan pembangunan berdasarkan kebutuhan dan profil populasi.
+        - **Pemahaman Keanekaragaman:** Analisis membantu menggambarkan keanekaragaman dalam konteks demografis.
+
+        **Pendekatan Metodologis: 📊**
+
+        Metode AHC digunakan untuk mengeksplorasi struktur hierarkis dalam data demografis, sementara K-Means memberikan pemahaman tentang kelompok populasi yang lebih terdefinisi. Kombinasi kedua metode ini memberikan pandangan holistik tentang distribusi dan hubungan antarwilayah.
+
+        **Kesimpulan: 🌟**
+
+        Analisis klaster dengan AHC dan K-Means diharapkan dapat memberikan gambaran yang lebih dalam tentang populasi Kabupaten Purwakarta. Hasilnya dapat digunakan sebagai dasar untuk kebijakan pembangunan yang lebih efektif, memastikan bahwa sumber daya dialokasikan dengan bijak sesuai dengan kebutuhan unik setiap wilayah.
+        ''')
       
 st.info('''
     Hasil analisis klaster menggunakan metode Agglomerative Hierarchical Clustering (AHC) dan K-Means pada data demografis BPS Kabupaten Purwakarta dapat memberikan wawasan yang berharga untuk:
