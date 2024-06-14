@@ -98,8 +98,6 @@ st.info('''
             ''', icon="🧐")
 
 with st.container(border=True):
-        # Judul dan deskripsi
-        st.title("Video Tutorial tentang K-Means Clustering")
         st.markdown("""
         Berikut adalah video YouTube yang menjelaskan tentang K-Means Clustering. Anda dapat menonton video ini langsung di YouTube untuk mendapatkan pemahaman yang lebih baik tentang metode tersebut.
         """)
@@ -117,7 +115,6 @@ with st.container(border=True):
         
 with st.container(border=True):
         # Judul dan deskripsi
-        st.title("Video Tutorial tentang AHC Clustering")
         st.markdown("""
         Berikut adalah video YouTube yang menjelaskan tentang Agglomerative Hierarchical Clustering (AHC). Anda dapat menonton video ini langsung di YouTube untuk mendapatkan pemahaman yang lebih baik tentang metode tersebut.
         """)
