@@ -44,8 +44,9 @@ st.markdown("&nbsp;", unsafe_allow_html=True)  # Spasi menggunakan HTML entity
  # Deskripsi menggunakan markdown
 st.success('''
         **Pendahuluan: 📊**
-        Bagian ini membahas penerapan Analisis Klaster Agglomerative Hierarchical Clustering (AHC) dan K-Means pada data demografis yang diperoleh dari Badan Pusat Statistik (BPS) Kabupaten Purwakarta. Metode klaster ini memberikan wawasan yang berharga untuk memahami pola dan kelompok dalam populasi, memungkinkan pengambilan keputusan yang terinformasi dan intervensi yang lebih terarah.
-
+        Pertumbuhan penduduk yang dipengaruhi oleh faktor alam, migrasi, dan kebijakan menjadikan Kabupaten Purwakarta, Jawa Barat, sebagai Kota Metropolitan pada tahun 2023 dengan jumlah penduduk 1.028.569 jiwa dan luas wilayah 971,72 km². Kepadatan penduduk mencerminkan distribusi penduduk di wilayah tersebut. Pertumbuhan tahunan mencapai 15.774 jiwa (1,52%), dengan Kecamatan Campaka memiliki pertumbuhan tertinggi (2,92%) dan Kecamatan Purwakarta terendah (0,71%).
+        Peningkatan jumlah penduduk di Purwakarta meningkatkan kepadatan, berpotensi memicu kriminalitas dan degradasi ekosistem. Pertumbuhan cepat ini menambah kebutuhan pangan, air bersih, dan tempat tinggal, serta meningkatkan risiko pencemaran air, tanah, dan udara. Ketidakseimbangan antara sumber daya alam dan kebutuhan manusia menyebabkan penurunan sumber daya dan hilangnya keanekaragaman hayati.
+       
         **Pendekatan Utama: 🌐**
 
         1. **Agglomerative Hierarchical Clustering (AHC):**
@@ -54,15 +55,17 @@ st.success('''
 
         2. **K-Means Clustering:**
             - K-Means membagi data menjadi 'k' klaster berdasarkan kemiripan.
-            - Dengan menerapkan K-Means pada data BPS Kabupaten Purwakarta, kita bertujuan untuk menemukan segmen populasi yang berbeda dan fitur-fitur yang mendefinisikannya.
+            - Dengan menerapkan K-Means bertujuan untuk mengelompokkan objek/data ke dalam cluster yang memiliki karakteristik yang sama.
 
         **Sumber Data: 📈**
 
-        Data demografis yang digunakan dalam analisis ini berasal dari Badan Pusat Statistik (BPS) Kabupaten Purwakarta. Data ini mencakup indikator-indikator utama selama beberapa tahun, memberikan pandangan komprehensif tentang lanskap populasi.
+        Data penduduk yang digunakan dalam analisis ini berasal dari Badan Pusat Statistik (BPS) Kabupaten Purwakarta dari website purwakartakab.bps.go.id.
+        Data ini mencakup atribut:
+        Desa, tahun, dan jumlah penduduk. Data tersebut mencakup Desa/Kelurahan di setiap Kecamatan di Kabupaten Purwakarta dan diambil dari tahun 2011 hingga 2023.
 
         **Tujuan: 🎯**
 
-        Tujuan utama adalah menggunakan teknik klaster untuk mengkategorikan wilayah-wilayah dalam Kabupaten Purwakarta berdasarkan pola demografis. Analisis ini dapat membantu pembuat kebijakan, peneliti, dan otoritas lokal dalam memahami keragaman dalam wilayah tersebut dan merancang strategi pembangunan secara tepat.
+        Tujuan utama adalah solusi pemerintah Kabupaten Purwakarta untuk pengambilan keputusan terkait kebijakan, program, atau proyek yang berhubungan dengan penduduk juga dalam mengambil keputusan yang lebih tepat dan efisien untuk kepentingan masyarakat dengan pembagian cluster tingkat kepadatan tidak padat, padat dan sangat padat.
 
         **Manfaat Analisis Klaster: 📚**
 
