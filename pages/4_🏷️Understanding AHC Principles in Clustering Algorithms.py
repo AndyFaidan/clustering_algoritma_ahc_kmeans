@@ -23,7 +23,6 @@ with open('style.css') as f:
 
 st.header("UNDERSTANDING AGGLOMERATIVE HIERARCHICAL CLUSTERING (AHC)")
 
-st.latex(r"d(x, y) = \sqrt{(x_1 - y_1)^2 + (x_2 - y_2)^2 + \ldots + (x_n - y_n)^2}")
 
 # Explanation of AHC
 st.markdown(
@@ -50,6 +49,12 @@ st.markdown(
     }
 </style>
 """, unsafe_allow_html=True)
+
+with st.expander("⬇ Berikut Rumus Perhitungan Jarak Euclidean :"):
+     st.latex(r"d(x, y) = \sqrt{(x_1 - y_1)^2 + (x_2 - y_2)^2 + \ldots + (x_n - y_n)^2}")
+     st.write("di mana:")
+     st.write("x1,x2,…,x n adalah koordinat titik 𝑥 dalam dimensi ke-𝑛.")
+     st.write("y1,y2,…,y n adalah koordinat titik 𝑦 dalam dimensi ke-𝑛.")
 
 # Read data
 df = pd.read_csv("AUDIT-Data_Original_Update.csv")
