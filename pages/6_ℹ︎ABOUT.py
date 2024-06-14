@@ -67,13 +67,7 @@ st.success('''
 
         Tujuan utama adalah solusi pemerintah Kabupaten Purwakarta untuk pengambilan keputusan terkait kebijakan, program, atau proyek yang berhubungan dengan penduduk juga dalam mengambil keputusan yang lebih tepat dan efisien untuk kepentingan masyarakat dengan pembagian cluster tingkat kepadatan tidak padat, padat dan sangat padat.
 
-        **Manfaat Analisis Klaster: 📚**
-
-        - **Pola yang Memberi Wawasan:** Mengungkap pola dan struktur bawaan dalam populasi Kabupaten Purwakarta, memungkinkan pihak terkait untuk membuat kebijakan yang lebih terfokus.
-        - **Identifikasi Kelompok Demografis:** Memahami kelompok penduduk dengan karakteristik serupa.
-        - **Perencanaan Pembangunan:** Menyediakan dasar untuk perencanaan pembangunan berdasarkan kebutuhan dan profil populasi.
-        - **Pemahaman Keanekaragaman:** Analisis membantu menggambarkan keanekaragaman dalam konteks demografis.
-
+   
         **Pendekatan Metodologis: 📊**
 
         Metode AHC digunakan untuk mengeksplorasi struktur hierarkis dalam data demografis, sementara K-Means memberikan pemahaman tentang kelompok populasi yang lebih terdefinisi. Kombinasi kedua metode ini memberikan pandangan holistik tentang distribusi dan hubungan antarwilayah.
@@ -95,7 +89,7 @@ st.info('''
             * **Memahami** keragaman dalam wilayah tersebut.
             * **Merancang** strategi pembangunan yang sesuai.
 
-            Dengan menggunakan teknik klaster seperti AHC dan K-Means, kita dapat mengeksplorasi struktur alami dalam data demografis, mengidentifikasi kelompok wilayah dengan karakteristik populasi yang serupa, dan menemukan segmen populasi yang berbeda.
+            Dengan menggunakan teknik klaster seperti AHC dan K-Means, kita dapat mengeksplorasi struktur alami dalam data demografis, mengidentifikasi kelompok wilayah dengan karakteristik populasi yang serupa, dan menemukan cluster populasi yang berbeda.
 
             Analisis ini memberikan landasan untuk **menginformasikan** kebijakan pembangunan wilayah dan **mengeksplorasi** faktor-faktor yang dapat mempengaruhi pola demografis di Kabupaten Purwakarta.
             ''', icon="🧐")
