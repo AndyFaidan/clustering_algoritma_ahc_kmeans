@@ -32,19 +32,13 @@ html_content = f"""
     </style>
 
     <h2 style='color: #de3f53; margin-top:0px; border-bottom: solid 5px;'>Tentang Analisis Klaster AHC dan K-Means pada Data BPS Kabupaten Purwakarta</h2>
-    
-    <a href='https://www.oecd.org/pisa/' target='_blank'><b>PISA</b></a> stands for the "<b>Programme for International Student Assessment</b>".
-    It is an international assessment conducted by the <a href='https://www.oecd.org' target='_blank'>Organisation for Economic Co-operation and Development (OECD)</a>
-    to evaluate the knowledge and skills of in 
-    <span style='color: blue;font-weight: bold;'>reading <i class="fa-solid fa-book-open-reader fa-beat"></i></span>, 
-    <span style='color: red; font-weight: bold;'>mathematics <i class="fa-solid fa-calculator fa-fade"></i></span>, and 
-    <span style='color: green;font-weight: bold;'>science <i class="fa-solid fa-flask-vial fa-shake"></i></span>. PISA assessments are conducted <b>every three years</b>, 
-    and the results provide insights into the performance of education systems around the <span style='margin-top: 0px;margin-bottom: 10px;font-family: sans-serif; font-weight: bold; background: linear-gradient(to right, #ef5350, #f48fb1, #7e57c2, #2196f3, #26c6da, #43a047, #eeff41, #f9a825, #ff5722);-webkit-background-clip: text;-webkit-text-fill-color: transparent;'>world</span>.
 """
 
 # Display the HTML content
 st.markdown(html_content, unsafe_allow_html=True)
-st.divider()
+
+# Menambahkan jarak
+st.markdown("&nbsp;", unsafe_allow_html=True)  # Spasi menggunakan HTML entity
 
 
  # Deskripsi menggunakan markdown
