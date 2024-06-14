@@ -36,7 +36,7 @@ merged_df = gdf_geojson.merge(df_csv, how='left', left_on='DESA_1', right_on='DE
 df_reshaped = df_csv.groupby(['year', 'DESA_1']).agg({'population': 'sum'}).reset_index()
 
 # Aplikasi Streamlit
-st.title('Visualisasi Distribusi Penduduk')
+st.title('Visualisasi Pemetaan Data Penduduk Berdasarkan Desa Di Setiap Kecamatan Di Kabupaten Purwakarta')
 
 # Adding a divider line
 st.divider()
