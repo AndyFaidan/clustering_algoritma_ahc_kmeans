@@ -73,21 +73,21 @@ st.success('''
     ''')
 
 st.info('''
-        Hasil analisis klaster menggunakan metode Agglomerative Hierarchical Clustering (AHC) dan K-Means pada data demografis BPS Kabupaten Purwakarta dapat memberikan wawasan yang berharga untuk:
+Hasil analisis klaster menggunakan metode Agglomerative Hierarchical Clustering (AHC) dan K-Means pada data demografis BPS Kabupaten Purwakarta dapat memberikan wawasan yang berharga untuk:
 
-            * **Mengidentifikasi** pola dan kelompok dalam populasi.
-            * **Mendukung** pengambilan keputusan yang terinformasi.
-            * **Mengarahkan** intervensi dengan lebih tepat.
+* **Mengidentifikasi** pola dan kelompok dalam populasi.
+* **Mendukung** pengambilan keputusan yang terinformasi.
+* **Mengarahkan** intervensi dengan lebih tepat.
 
-            Analisis ini dapat menjadi **alat penting** bagi **pembuat kebijakan**, **peneliti**, dan **otoritas lokal** dalam:
+Analisis ini dapat menjadi **alat penting** bagi **pembuat kebijakan**, **peneliti**, dan **otoritas lokal** dalam:
 
-            * **Memahami** keragaman dalam wilayah tersebut.
-            * **Merancang** strategi pembangunan yang sesuai.
+* **Memahami** keragaman dalam wilayah tersebut.
+* **Merancang** strategi pembangunan yang sesuai.
 
-            Dengan menggunakan teknik klaster seperti AHC dan K-Means, kita dapat mengeksplorasi struktur alami dalam data demografis, mengidentifikasi kelompok wilayah dengan karakteristik populasi yang serupa, dan menemukan cluster populasi yang berbeda.
+Dengan menggunakan teknik klaster seperti AHC dan K-Means, kita dapat mengeksplorasi struktur alami dalam data demografis, mengidentifikasi kelompok wilayah dengan karakteristik populasi yang serupa, dan menemukan cluster populasi yang berbeda.
 
-            Analisis ini memberikan landasan untuk **menginformasikan** kebijakan pembangunan wilayah dan **mengeksplorasi** faktor-faktor yang dapat mempengaruhi pola demografis di Kabupaten Purwakarta.
-            ''', icon="🧐")
+Analisis ini memberikan landasan untuk **menginformasikan** kebijakan pembangunan wilayah dan **mengeksplorasi** faktor-faktor yang dapat mempengaruhi pola demografis di Kabupaten Purwakarta.
+''', icon="🧐")
 
 # Container for YouTube video about K-Means Clustering
 with st.container(border=True):
