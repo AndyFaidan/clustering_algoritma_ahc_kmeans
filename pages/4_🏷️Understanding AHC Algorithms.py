@@ -210,7 +210,7 @@ with c2:
         st.pyplot()
 
         st.write(f"Cophenetic Correlation Coefficient (CCC) untuk Dendrogram AHC (Average): {ccc_average:.4f}")
-        st.write(f"Jumlah klaster optimal untuk metode linkage Average: {len(set(labels_average))}")
+        
     
 
 with c3:
@@ -224,8 +224,7 @@ with c3:
         st.pyplot()
 
         st.write(f"Cophenetic Correlation Coefficient (CCC) untuk Dendrogram AHC (Complete): {ccc_complete:.4f}")
-        st.write(f"Jumlah klaster optimal untuk metode linkage Complete: {len(set(labels_complete))}")
-   
+       
 
 with st.expander("⬇ LINKAGE INFORMATION"):
     st.write("Single Linkage: Menggunakan jarak minimum antara anggota klaster.")
