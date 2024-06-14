@@ -25,6 +25,12 @@ html_content = f"""
         -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
         -webkit-font-smoothing: auto;
     }}
+    h2 {{
+        color: #ffffff;
+        margin-top: 0px;
+        border-bottom: solid 5px;
+        text-align: center;
+    }}
     </style>
 
     <h2 style='color: #de3f53; margin-top: 0px; border-bottom: solid 5px;'>Tentang Analisis Klaster AHC dan K-Means pada Data BPS Kabupaten Purwakarta</h2>
