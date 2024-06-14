@@ -194,7 +194,7 @@ with c1:
         dendrogram(linkage_matrix_single)
         plt.title('Dendrogram AHC (Single)')
         plt.xlabel('Indeks Data')
-        plt.ylabel('Jarak')
+        plt.ylabel('Distance')
         st.pyplot()
 
         st.write(f"Cophenetic Correlation Coefficient (CCC) untuk Dendrogram AHC (Single): {ccc_single:.4f}")
@@ -206,7 +206,7 @@ with c2:
         dendrogram(linkage_matrix_average)
         plt.title('Dendrogram AHC (Average)')
         plt.xlabel('Indeks Data')
-        plt.ylabel('Jarak')
+        plt.ylabel('Distance')
         st.pyplot()
 
         st.write(f"Cophenetic Correlation Coefficient (CCC) untuk Dendrogram AHC (Average): {ccc_average:.4f}")
@@ -220,7 +220,7 @@ with c3:
         dendrogram(linkage_matrix_complete)
         plt.title('Dendrogram AHC (Complete)')
         plt.xlabel('Indeks Data')
-        plt.ylabel('Jarak')
+        plt.ylabel('Distance')
         st.pyplot()
 
         st.write(f"Cophenetic Correlation Coefficient (CCC) untuk Dendrogram AHC (Complete): {ccc_complete:.4f}")
