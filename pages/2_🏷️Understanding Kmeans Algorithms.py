@@ -72,7 +72,7 @@ with st.expander("⬇ DATA UNDERSTANDING FOR KMEANS :"):
 
     st.write("Analisis spasial dengan mempertimbangkan koordinat geografis (Latitude dan Longitude), seperti yang terdapat dalam dataset, juga dapat membantu mengidentifikasi pola atau keterkaitan spasial di antara entitas populasi, memberikan wawasan lebih lanjut dalam konteks geografis.")
 
-    st.write("### Summary Statistics:")
+    st.write("### Summary Statistics")
 
 # Choose the column for the line chart
 selected_column = '2023'
