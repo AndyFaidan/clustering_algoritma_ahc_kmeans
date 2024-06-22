@@ -152,7 +152,7 @@ with st.expander("⬇ NULL VALUES, TENDENCY & VARIABLE DISPERSION"):
     a2.dataframe(df.describe().T, use_container_width=True)
 
 X = df[['2011', '2012', '2013', '2014', '2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023']]
-kmeans = KMeans(n_clusters=3, random_state=42)
+kmeans = KMeans(n_clusters=2, random_state=42)
 df['Cluster'] = kmeans.fit_predict(X)
 
 # Metode Elbow untuk menentukan jumlah klaster optimal
