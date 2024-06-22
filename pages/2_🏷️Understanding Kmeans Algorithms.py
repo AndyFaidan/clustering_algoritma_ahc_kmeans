@@ -75,7 +75,7 @@ with st.expander("⬇ DATA UNDERSTANDING FOR KMEANS :"):
     st.write("### Summary Statistics:")
 
 # Choose the column for the line chart
-selected_column = '2020'
+selected_column = '2023'
 
 # Calculate quartiles
 quartiles = df[selected_column].quantile([0.25, 0.5, 0.75])
