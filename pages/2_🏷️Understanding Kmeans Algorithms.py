@@ -175,24 +175,31 @@ c1, c2, c3 = st.columns(3)
 with c1:
     with st.expander("⬇ ELBOW METHOD"):
         st.write("Metode Elbow digunakan untuk menentukan jumlah klaster optimal dalam algoritma KMeans.")
-        plt.figure(figsize=(8, 6))
-        plt.plot(range(1, 11), distortions, marker='o')
-        plt.title('Metode Elbow untuk Menentukan Jumlah Klaster Optimal')
-        plt.xlabel('Jumlah Klaster')
-        plt.ylabel('Distorsi')
-        st.pyplot()
+        
+        # Create a figure and axis
+        fig, ax = plt.subplots(figsize=(8, 6))
+        ax.plot(range(1, 11), distortions, marker='o')
+        ax.set_title('Metode Elbow untuk Menentukan Jumlah Klaster Optimal')
+        ax.set_xlabel('Jumlah Klaster')
+        ax.set_ylabel('Distorsi')
+        
+        # Pass the figure to st.pyplot
+        st.pyplot(fig)
 
 # Visualisasi Silhouette Score
 with c2:
     with st.expander("⬇ SILHOUETTE SCORE"):
         st.write("Silhouette Score digunakan untuk mengukur sejauh mana klaster terpisah dan saling berdekatan.")
+
+        # Create a figure and axis
+        fig, ax = plt.subplots(figsize=(8, 6))
+        ax.plot(range(2, 11), silhouette_scores, marker='o')
+        ax.set_title('Silhouette Score untuk Menentukan Jumlah Klaster Optimal')
+        ax.set_xlabel('Jumlah Klaster')
+        ax.set_ylabel('Silhouette Score')
         
-        plt.figure(figsize=(8, 6))
-        plt.plot(range(2, 11), silhouette_scores, marker='o')
-        plt.title('Silhouette Score untuk Menentukan Jumlah Klaster Optimal')
-        plt.xlabel('Jumlah Klaster')
-        plt.ylabel('Silhouette Score')
-        st.pyplot()
+        # Pass the figure to st.pyplot
+        st.pyplot(fig)
 
 # Kesimpulan
 with c3:
