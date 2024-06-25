@@ -219,8 +219,8 @@ with c3:
 # Display the scatter plot using Plotly Express for 2 clusters
 with st.expander("⬇ CLUSTER VISUALIZATION"):
     
-    fig = px.scatter(df, x='2011', y='2012', color='Cluster',
-                     title="Clusters of Customers (2 Clusters)", labels={'2011': '2011', '2012': '2012'},
+    fig = px.scatter(df, x='2022', y='2023', color='Cluster',
+                     title="Clusters of Customers (2 Clusters)", labels={'2022': '2022', '2023': '2023'},
                      color_continuous_scale='viridis', size_max=10, range_color=[0, 1])
     fig.update_traces(marker=dict(size=12, opacity=0.8),
                       selector=dict(mode='markers'))
