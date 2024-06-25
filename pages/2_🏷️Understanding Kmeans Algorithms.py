@@ -57,7 +57,7 @@ df=pd.read_csv("Data_Original_Update.csv")
 #logo
 
 # Pilih fitur yang ingin digunakan untuk klasterisasi
-features_kmeans = df[['2011', '2012', '2013', '2014', '2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023']]
+features_kmeans = df[['2023']]
 
 # Sample DataFrame
 df_sample = df.sample(n=10)  # Ambil sampel 10 desa
@@ -152,7 +152,7 @@ with st.expander("⬇ NULL VALUES, TENDENCY & VARIABLE DISPERSION"):
     a2.write("Insight ke dalam kecenderungan sentral, dispersi, dan distribusi data.")
     a2.dataframe(df.describe().T, use_container_width=True)
 
-X = df[['2011', '2012', '2013', '2014', '2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023']]
+X = df[['2023']]
 kmeans = KMeans(n_clusters=2, random_state=42)
 df['Cluster'] = kmeans.fit_predict(X)
 
