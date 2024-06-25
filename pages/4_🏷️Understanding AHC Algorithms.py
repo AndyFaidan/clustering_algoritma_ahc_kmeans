@@ -190,39 +190,37 @@ c1, c2, c3 = st.columns(3)
 
 with c1:
     with st.expander("⬇ DENDROGRAM SINGLE"):
-        # Visualisasi Dendrogram untuk Ward
-        plt.figure(figsize=(8, 6))
-        dendrogram(linkage_matrix_single)
-        plt.title('Dendrogram AHC (Single)')
-        plt.xlabel('Indeks Data')
-        plt.ylabel('Distance')
-        st.pyplot()
+        # Visualisasi Dendrogram untuk Single
+        fig_single, ax_single = plt.subplots(figsize=(8, 6))
+        dendrogram(linkage_matrix_single, ax=ax_single)
+        ax_single.set_title('Dendrogram AHC (Single)')
+        ax_single.set_xlabel('Indeks Data')
+        ax_single.set_ylabel('Distance')
+        st.pyplot(fig_single)
 
         st.write(f"Cophenetic Correlation Coefficient (CCC) untuk Dendrogram AHC (Single): {ccc_single:.4f}")
 
 with c2:
-     with st.expander("⬇ DENDROGRAM AVERAGE"):
+    with st.expander("⬇ DENDROGRAM AVERAGE"):
         # Visualisasi Dendrogram untuk Average
-        plt.figure(figsize=(8, 6))
-        dendrogram(linkage_matrix_average)
-        plt.title('Dendrogram AHC (Average)')
-        plt.xlabel('Indeks Data')
-        plt.ylabel('Distance')
-        st.pyplot()
+        fig_average, ax_average = plt.subplots(figsize=(8, 6))
+        dendrogram(linkage_matrix_average, ax=ax_average)
+        ax_average.set_title('Dendrogram AHC (Average)')
+        ax_average.set_xlabel('Indeks Data')
+        ax_average.set_ylabel('Distance')
+        st.pyplot(fig_average)
 
         st.write(f"Cophenetic Correlation Coefficient (CCC) untuk Dendrogram AHC (Average): {ccc_average:.4f}")
-        
-    
 
 with c3:
-     with st.expander("⬇ DENDROGRAM COMPLETE"):
+    with st.expander("⬇ DENDROGRAM COMPLETE"):
         # Visualisasi Dendrogram untuk Complete
-        plt.figure(figsize=(8, 6))
-        dendrogram(linkage_matrix_complete)
-        plt.title('Dendrogram AHC (Complete)')
-        plt.xlabel('Indeks Data')
-        plt.ylabel('Distance')
-        st.pyplot()
+        fig_complete, ax_complete = plt.subplots(figsize=(8, 6))
+        dendrogram(linkage_matrix_complete, ax=ax_complete)
+        ax_complete.set_title('Dendrogram AHC (Complete)')
+        ax_complete.set_xlabel('Indeks Data')
+        ax_complete.set_ylabel('Distance')
+        st.pyplot(fig_complete)
 
         st.write(f"Cophenetic Correlation Coefficient (CCC) untuk Dendrogram AHC (Complete): {ccc_complete:.4f}")
        
