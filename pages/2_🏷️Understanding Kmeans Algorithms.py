@@ -123,7 +123,7 @@ with st.expander("⬇ EKSPLORASI VARIABEL:"):
     st.write("Melihat matriks korelasi antara variabel dalam dataset.")
     
     # Ganti df_selection dengan dataframe yang ingin Anda gunakan
-    selected_features = ['2011', '2012', '2013', '2014', '2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023']
+    selected_features = ['2023']
     
     # Hitung matriks korelasi
     correlation_matrix = df[selected_features].corr()
