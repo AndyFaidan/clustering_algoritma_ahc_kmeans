@@ -126,7 +126,6 @@ with st.expander("⬇ EKSPLORASI VARIABEL:"):
     # Ganti df_selection dengan dataframe yang ingin Anda gunakan
     selected_features = ['2011', '2012', '2013', '2014', '2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023']
     
-    
     # Hitung matriks korelasi
     correlation_matrix = df[selected_features].corr()
 
@@ -154,8 +153,8 @@ with st.expander("⬇ NULL VALUES, TENDENCY & VARIABLE DISPERSION"):
     a2.write("Insight ke dalam kecenderungan sentral, dispersi, dan distribusi data.")
     a2.dataframe(df.describe().T, use_container_width=True)
 
-X = df[['2023']]
-kmeans = KMeans(n_clusters=2, random_state=42)
+X = df[['2011', '2012', '2013', '2014', '2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023']]
+kmeans = KMeans(n_clusters=3, random_state=42)
 df['Cluster'] = kmeans.fit_predict(X)
 
 # Metode Elbow untuk menentukan jumlah klaster optimal
@@ -217,12 +216,12 @@ with c3:
         st.write(f"Silhouette Score tertinggi: {best_silhouette_score}")
 
 
-
 # Display the scatter plot using Plotly Express
 with st.expander("⬇ CLUSTER VISUALIZATION"):
     
-    fig = px.scatter(df, x='2022', y='2023', color='Cluster',
-                 title="Clusters", labels={'2022': '2022', '2023': '2023'},
+    fig = px.scatter(df, x='2011', y='2012', color='Cluster',
+                 title="Clusters of Customers", labels={'2011': '2011', '2012': '2012'},
                  color_continuous_scale='viridis', size_max=10)
     fig.update_layout(showlegend=True)
     st.plotly_chart(fig)
+
