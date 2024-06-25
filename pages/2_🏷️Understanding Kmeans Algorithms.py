@@ -53,12 +53,12 @@ with st.expander("⬇ RUMUS SSE (Sum of Squared Errors) :"):
      st.write("𝑐𝑖 adalah centroid dari klaster ke-𝑖,")
      st.write("∣∣𝑥𝑖𝑗−𝑐𝑖∣∣2 adalah jarak kuadrat antara sampel data 𝑥𝑖𝑗 dan centroid klaster 𝑐𝑖.")
 
-df=pd.read_csv("Data_Original_Update.csv")
+
+df=pd.read_csv("AUDIT-Data_Original_Update.csv")
 #logo
 
 # Pilih fitur yang ingin digunakan untuk klasterisasi
-features_kmeans = df[['2023']]
-
+features_kmeans = df[['2011', '2012', '2013', '2014', '2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023', 'Latitude', 'Longitude']]
 
 # Sample DataFrame
 df_sample = df.sample(n=10)  # Ambil sampel 10 desa
@@ -66,18 +66,18 @@ df_sample = df.sample(n=10)  # Ambil sampel 10 desa
 # Ekspander untuk menampilkan data
 with st.expander("⬇ DATA UNDERSTANDING FOR KMEANS :"):
     # Display summary statistics
-    st.write("### Summary Statistics:")
-    st.write(df.describe())
     st.write("Pendekatan statistik dari data populasi memberikan wawasan mendalam tentang karakteristik keseluruhan dari dataset. Dengan menganalisis statistik deskriptif, seperti yang ditampilkan di atas, kita dapat melihat gambaran umum tentang bagaimana nilai-nilai tersebar, tendensi sentral, dan sebaran data.")
 
     st.write("Selain itu, pendekatan inferensial dapat digunakan untuk membuat estimasi atau pengambilan keputusan lebih lanjut berdasarkan sampel data yang diambil dari populasi. Misalnya, penggunaan interval kepercayaan atau pengujian hipotesis dapat memberikan pemahaman lebih lanjut tentang parameter populasi.")
 
     st.write("Analisis spasial dengan mempertimbangkan koordinat geografis (Latitude dan Longitude), seperti yang terdapat dalam dataset, juga dapat membantu mengidentifikasi pola atau keterkaitan spasial di antara entitas populasi, memberikan wawasan lebih lanjut dalam konteks geografis.")
 
-    
+    st.write("### Summary Statistics:")
+    st.write(df.describe())
+
 
 # Choose the column for the line chart
-selected_column = '2023'
+selected_column = '2020'
 
 # Calculate quartiles
 quartiles = df[selected_column].quantile([0.25, 0.5, 0.75])
@@ -224,4 +224,3 @@ with st.expander("⬇ CLUSTER VISUALIZATION"):
                  color_continuous_scale='viridis', size_max=10)
     fig.update_layout(showlegend=True)
     st.plotly_chart(fig)
-
