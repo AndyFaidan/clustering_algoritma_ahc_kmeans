@@ -58,7 +58,7 @@ df=pd.read_csv("AUDIT-Data_Original_Update.csv")
 #logo
 
 # Pilih fitur yang ingin digunakan untuk klasterisasi
-features_kmeans = df[['2011', '2012', '2013', '2014', '2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023', 'Latitude', 'Longitude']]
+features_kmeans = df[['2011', '2012', '2013', '2014', '2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023']]
 
 # Sample DataFrame
 df_sample = df.sample(n=10)  # Ambil sampel 10 desa
