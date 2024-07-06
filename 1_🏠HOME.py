@@ -227,7 +227,7 @@ with st.expander('Informasi', expanded=True):
         - :information_source: **Rata-rata Penduduk:** Rata-rata penduduk untuk tahun yang dipilih.
         - :information_source: **Rata-rata Penduduk (Area Teratas):** Rata-rata penduduk di area teratas.
         - :information_source: **Modus Penduduk (Area Teratas):** Modus penduduk di area teratas.
-        - :bar_chart: **Visualisasi Penduduk:** Peta korelasi dan peta panas menampilkan total penduduk di berbagai area.
+        - :bar_chart: **Visualisasi Penduduk:** Peta korelasi dan heatmap menampilkan total penduduk di berbagai area.
         - :chart_with_upwards_trend: **Tren Penduduk:** Kenaikan/Penurunan, Area Teratas/Terendah berdasarkan Penduduk, dan Perubahan Penduduk Ekstrem divisualisasikan untuk memberikan wawasan tentang dinamika penduduk.
     ''')
 
