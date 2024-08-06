@@ -58,14 +58,14 @@ selected_DESA = st.sidebar.selectbox('Pilih DESA', sorted(merged_df['DESA_1'].un
 # Memfilter data untuk DESA yang dipilih
 filtered_df_DESA = filtered_df[filtered_df['DESA_1'] == selected_DESA]
 
-# Calculate center and zoom based on geometry bounding box
-center_lat, center_lon, zoom = calculate_center_and_zoom(filtered_df.geometry.unary_union)
+# Menghitung pusat dan zoom berdasarkan bounding box geometri yang dipilih
+center_lat, center_lon = filtered_df.geometry.centroid.y.mean(), filtered_df.geometry.centroid.x.mean()
+zoom = 8.5  # Sesuaikan tingkat zoom
+# Ambil koordinat lon dan lat untuk DESA yang dipilih
+selected_lon = filtered_df_DESA.geometry.centroid.x.values[0]
+selected_lat = filtered_df_DESA.geometry.centroid.y.values[0]
 
-# Extract full coordinates for the selected DESA
-selected_geometry = filtered_df_DESA.geometry.values[0]
-selected_coordinates = get_geometry_coordinates(selected_geometry)
-
-# Create interactive map using Plotly Express
+# Membuat peta interaktif menggunakan Plotly Express
 fig = px.choropleth_mapbox(
     filtered_df,
     geojson=filtered_df.geometry,
@@ -79,28 +79,27 @@ fig = px.choropleth_mapbox(
     range_color=(min(filtered_df['population']), max(filtered_df['population']))
 )
 
-# Add marker for the selected DESA
+# Menambahkan marker untuk DESA yang dipilih
 fig.add_trace(go.Scattermapbox(
     mode="markers+text",
-    lon=[coord[0] for coord in selected_coordinates],
-    lat=[coord[1] for coord in selected_coordinates],
+    lon=[selected_lon],
+    lat=[selected_lat],
     marker=dict(size=14, color="red"),
     text=[selected_DESA],
     hoverinfo='text',
     showlegend=False
 ))
 
-# Set map layout
+
+
+# Menetapkan tata letak peta
 fig.update_layout(
     template='plotly_dark',
     plot_bgcolor='rgba(0, 0, 0, 0)',
     paper_bgcolor='rgba(0, 0, 0, 0)',
     margin=dict(l=0, r=0, t=0, b=0),
-    height=400  # Adjust height
+    height=400  # Sesuaikan tinggi
 )
-
-# Main Script
-st.plotly_chart(fig, use_container_width=True)
 
 # Fungsi heatmap dengan pemilihan tema warna
 def make_heatmap(input_df, input_y, input_x, input_color, input_color_theme):
