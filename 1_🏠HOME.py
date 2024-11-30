@@ -4,6 +4,9 @@ import pandas as pd
 import plotly.express as px
 import altair as alt
 import plotly.graph_objects as go
+from pandas_profiling import ProfileReport
+
+
 
 
 # Set page configuration
