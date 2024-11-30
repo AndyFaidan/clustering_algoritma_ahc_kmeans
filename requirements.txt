@@ -9,5 +9,4 @@ scipy==1.10.1
 fiona==1.10.1
 shapely==2.0.6
 pyproj==3.7.0
-pandas-profiling==3.2.0
-pydantic==2.10.2
+plotly-express==0.4.1
