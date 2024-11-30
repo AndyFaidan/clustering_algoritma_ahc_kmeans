@@ -35,6 +35,8 @@ merged_df = gdf_geojson.merge(df_csv, how='left', left_on='DESA_1', right_on='DE
 # Mengubah bentuk DataFrame jika diperlukan
 df_reshaped = df_csv.groupby(['year', 'DESA_1']).agg({'population': 'sum'}).reset_index()
 
+st.snow()
+
 # Aplikasi Streamlit
 st.title('Visualisasi Pemetaan Data Penduduk Berdasarkan Desa Di Setiap Kecamatan Di Kabupaten Purwakarta')
 
