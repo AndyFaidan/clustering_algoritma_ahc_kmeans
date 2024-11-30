@@ -28,6 +28,8 @@ gdf_geojson = gpd.read_file(geojson_file)
 # Memuat file CSV, set kolom 'Unnamed: 0' sebagai indeks
 csv_file = 'AUDIT_data_kab.pwk.csv'
 df_csv = pd.read_csv(csv_file, index_col=0)
+pr = df.profile_report()
+
 
 # Menggabungkan dataset berdasarkan DESA_1
 merged_df = gdf_geojson.merge(df_csv, how='left', left_on='DESA_1', right_on='DESA_1')
@@ -232,6 +234,7 @@ with st.expander('Informasi', expanded=True):
         - :bar_chart: **Visualisasi Penduduk:** Peta korelasi dan heatmap menampilkan total penduduk di berbagai area.
         - :chart_with_upwards_trend: **Tren Penduduk:** Kenaikan/Penurunan, Area Teratas/Terendah berdasarkan Penduduk, dan Perubahan Penduduk Ekstrem divisualisasikan untuk memberikan wawasan tentang dinamika penduduk.
     ''')
+st_profile_report(pr)
 
 if __name__ == "__main__":
     # Call the homepage function
