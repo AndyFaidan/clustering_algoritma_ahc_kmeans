@@ -4,10 +4,6 @@ import pandas as pd
 import plotly.express as px
 import altair as alt
 import plotly.graph_objects as go
-from pandas_profiling import ProfileReport
-from pydantic_settings import BaseSettings
-
-
 
 
 # Set page configuration
@@ -32,10 +28,6 @@ gdf_geojson = gpd.read_file(geojson_file)
 # Memuat file CSV
 csv_file = 'AUDIT_data_kab.pwk.csv'
 df_csv = pd.read_csv(csv_file, index_col=0)
-
-# Membuat laporan profil data
-pr = ProfileReport(df_csv, title="Laporan Profil Data", explorative=True)
-
 
 # Menggabungkan dataset berdasarkan DESA_1
 merged_df = gdf_geojson.merge(df_csv, how='left', left_on='DESA_1', right_on='DESA_1')
@@ -241,9 +233,6 @@ with st.expander('Informasi', expanded=True):
         - :chart_with_upwards_trend: **Tren Penduduk:** Kenaikan/Penurunan, Area Teratas/Terendah berdasarkan Penduduk, dan Perubahan Penduduk Ekstrem divisualisasikan untuk memberikan wawasan tentang dinamika penduduk.
     ''')
     
-# Menampilkan laporan profil data di Streamlit
-with st.expander("Laporan Profil Data", expanded=False):
-    st_profile_report(pr)
 
 if __name__ == "__main__":
     # Call the homepage function
