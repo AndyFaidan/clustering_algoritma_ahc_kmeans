@@ -28,7 +28,7 @@ gdf_geojson = gpd.read_file(geojson_file)
 # Memuat file CSV, set kolom 'Unnamed: 0' sebagai indeks
 csv_file = 'AUDIT_data_kab.pwk.csv'
 csv_file = pd.read_csv(csv_file, index_col=0)
-pr = df.profile_report()
+pr = csv_file.profile_report()
 
 
 # Menggabungkan dataset berdasarkan DESA_1
