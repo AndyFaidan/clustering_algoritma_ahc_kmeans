@@ -25,10 +25,12 @@ with open('style.css') as f:
 geojson_file = 'andy.geojson'
 gdf_geojson = gpd.read_file(geojson_file)
 
-# Memuat file CSV, set kolom 'Unnamed: 0' sebagai indeks
+# Memuat file CSV
 csv_file = 'AUDIT_data_kab.pwk.csv'
-csv_file = pd.read_csv(csv_file, index_col=0)
-pr = csv_file.profile_report()
+df_csv = pd.read_csv(csv_file, index_col=0)
+
+# Membuat laporan profil data
+pr = ProfileReport(df_csv, title="Laporan Profil Data", explorative=True)
 
 
 # Menggabungkan dataset berdasarkan DESA_1
@@ -234,7 +236,10 @@ with st.expander('Informasi', expanded=True):
         - :bar_chart: **Visualisasi Penduduk:** Peta korelasi dan heatmap menampilkan total penduduk di berbagai area.
         - :chart_with_upwards_trend: **Tren Penduduk:** Kenaikan/Penurunan, Area Teratas/Terendah berdasarkan Penduduk, dan Perubahan Penduduk Ekstrem divisualisasikan untuk memberikan wawasan tentang dinamika penduduk.
     ''')
-st_profile_report(pr)
+    
+# Menampilkan laporan profil data di Streamlit
+with st.expander("Laporan Profil Data", expanded=False):
+    st_profile_report(pr)
 
 if __name__ == "__main__":
     # Call the homepage function
